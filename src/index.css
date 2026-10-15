@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream font-body text-ink antialiased;
+    word-break: keep-all;
+    /* 모눈종이 배경 */
+    background-image:
+      linear-gradient(#3d35520a 1px, transparent 1px),
+      linear-gradient(90deg, #3d35520a 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+  h1, h2, h3, h4 {
+    @apply font-jua;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-3xl border-2 border-ink bg-white shadow-pop;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-ink px-4 py-2 font-jua shadow-pop-sm transition-all duration-150
+      hover:-translate-y-0.5 hover:shadow-pop
+      active:translate-y-0.5 active:shadow-none
+      focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-pink-deep/40;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border-2 border-ink px-2.5 py-0.5 text-xs font-bold;
+  }
+  .dots {
+    background-image: radial-gradient(#3d355226 1.5px, transparent 1.5px);
+    background-size: 14px 14px;
+  }
+  .stripes {
+    background-image: repeating-linear-gradient(-45deg, #ffffff66 0 8px, transparent 8px 16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
