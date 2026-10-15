@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FileText, Heart, Image as ImageIcon, Link2, Paperclip, Pencil, Presentation, Table, Trophy } from 'lucide-react';
+import { FileText, Heart, Image as ImageIcon, Link2, Paperclip, Pencil, Presentation, Table, Trophy, Upload } from 'lucide-react';
 import { TONE } from '../lib/colors';
 import { sendLike } from '../lib/useContent';
 import SectionTitle from './SectionTitle';
@@ -114,6 +114,12 @@ export default function AssessmentGallery({ items, grades }) {
           <div className="mt-2 flex flex-wrap gap-3">
             <Filter items={KINDS} value={kind} onChange={setKind} label="자료 종류" id="kindPill" />
             <Filter items={gradeItems} value={grade} onChange={setGrade} label="학년" id="galleryGradePill" />
+            <a
+              href="#admin"
+              className="inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-butter px-4 py-1.5 font-jua shadow-pop-sm transition-transform hover:-translate-y-0.5"
+            >
+              <Upload size={16} strokeWidth={2.5} /> 과정물·결과물 올리기
+            </a>
           </div>
         </SectionTitle>
 
