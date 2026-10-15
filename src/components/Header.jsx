@@ -108,7 +108,7 @@ export default function Header({ title, subtitle, textbook, onStart }) {
           </motion.h1>
 
           <motion.p
-            className="mx-auto mt-5 max-w-xl font-hand text-2xl text-ink/80 sm:text-3xl"
+            className="mx-auto mt-5 max-w-xl font-jua text-xl text-ink/85 sm:text-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}

@@ -2,7 +2,7 @@
   "site": {
     "title": "짱하연T의 국어 탐구소",
     "subtitle": "읽고, 묻고, 쓰면서 함께 탐구하는 우리 반 국어 기지",
-    "textbook": "미래엔 (신유식)"
+    "textbook": "미래엔(신유식)"
   },
   "grades": [
     {
@@ -14,41 +14,166 @@
       "ready": true,
       "semesters": {
         "1": [
-          { "no": 1, "title": "표현과 소통의 즐거움", "emoji": "💌", "lessons": [
-            { "title": "길", "area": "문학", "textbook": "", "worksheet": "" },
-            { "title": "사랑하는 별 하나", "area": "문학", "textbook": "", "worksheet": "" },
-            { "title": "매체로 소통하기", "area": "매체", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 2, "title": "간추리고 쓰고", "emoji": "✂️", "lessons": [
-            { "title": "요약하며 읽기", "area": "읽기", "textbook": "", "worksheet": "" },
-            { "title": "정보를 전달하는 글 쓰기", "area": "쓰기", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 3, "title": "능동적인 언어생활", "emoji": "🎧", "lessons": [
-            { "title": "추론하며 듣기", "area": "듣기·말하기", "textbook": "", "worksheet": "" },
-            { "title": "품사의 종류와 특성", "area": "문법", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 4, "title": "성장의 시간", "emoji": "🌽", "lessons": [
-            { "title": "옥수수 뺑소니", "area": "문학", "textbook": "", "worksheet": "" },
-            { "title": "정서를 표현하는 글 쓰기", "area": "쓰기", "textbook": "", "worksheet": "" }
-          ]}
+          {
+            "no": 1,
+            "title": "표현과 소통의 즐거움",
+            "emoji": "💌",
+            "lessons": [
+              {
+                "title": "길",
+                "area": "문학",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "사랑하는 별 하나",
+                "area": "문학",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "매체로 소통하기",
+                "area": "매체",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 2,
+            "title": "간추리고 쓰고",
+            "emoji": "✂️",
+            "lessons": [
+              {
+                "title": "요약하며 읽기",
+                "area": "읽기",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "정보를 전달하는 글 쓰기",
+                "area": "쓰기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 3,
+            "title": "능동적인 언어생활",
+            "emoji": "🎧",
+            "lessons": [
+              {
+                "title": "추론하며 듣기",
+                "area": "듣기·말하기",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "품사의 종류와 특성",
+                "area": "문법",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 4,
+            "title": "성장의 시간",
+            "emoji": "🌽",
+            "lessons": [
+              {
+                "title": "옥수수 뺑소니",
+                "area": "문학",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "정서를 표현하는 글 쓰기",
+                "area": "쓰기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          }
         ],
         "2": [
-          { "no": 1, "title": "갈등을 넘어서", "emoji": "🌺", "lessons": [
-            { "title": "동백꽃", "area": "문학", "textbook": "", "worksheet": "" },
-            { "title": "토의하기", "area": "듣기·말하기", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 2, "title": "우리가 만드는 세상", "emoji": "🌏", "lessons": [
-            { "title": "슬기로운 매체 생활", "area": "매체", "textbook": "", "worksheet": "" },
-            { "title": "존중하며 말하기", "area": "듣기·말하기", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 3, "title": "우리말의 요모조모", "emoji": "🧩", "lessons": [
-            { "title": "단어의 짜임과 새말", "area": "문법", "textbook": "", "worksheet": "" },
-            { "title": "어휘의 양상과 쓰임", "area": "문법", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 4, "title": "너의 생각, 나의 의견", "emoji": "💭", "lessons": [
-            { "title": "추론하며 읽기", "area": "읽기", "textbook": "", "worksheet": "" },
-            { "title": "주장하는 글 쓰기", "area": "쓰기", "textbook": "", "worksheet": "" }
-          ]}
+          {
+            "no": 1,
+            "title": "갈등을 넘어서",
+            "emoji": "🌺",
+            "lessons": [
+              {
+                "title": "동백꽃",
+                "area": "문학",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "토의하기",
+                "area": "듣기·말하기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 2,
+            "title": "우리가 만드는 세상",
+            "emoji": "🌏",
+            "lessons": [
+              {
+                "title": "슬기로운 매체 생활",
+                "area": "매체",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "존중하며 말하기",
+                "area": "듣기·말하기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 3,
+            "title": "우리말의 요모조모",
+            "emoji": "🧩",
+            "lessons": [
+              {
+                "title": "단어의 짜임과 새말",
+                "area": "문법",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "어휘의 양상과 쓰임",
+                "area": "문법",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 4,
+            "title": "너의 생각, 나의 의견",
+            "emoji": "💭",
+            "lessons": [
+              {
+                "title": "추론하며 읽기",
+                "area": "읽기",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "주장하는 글 쓰기",
+                "area": "쓰기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          }
         ]
       }
     },
@@ -61,40 +186,161 @@
       "ready": true,
       "semesters": {
         "1": [
-          { "no": 1, "title": "목소리와 시선을 따라서", "emoji": "👀", "lessons": [
-            { "title": "세상에서 가장 따뜻했던 저녁", "area": "문학", "textbook": "", "worksheet": "" },
-            { "title": "멍키 스패너", "area": "문학", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 2, "title": "설명과 논증의 세계", "emoji": "🔍", "lessons": [
-            { "title": "설명과 논증 파악하며 읽기", "area": "읽기", "textbook": "", "worksheet": "" },
-            { "title": "설명하는 글 쓰기", "area": "쓰기", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 3, "title": "정확하게, 자신감 있게", "emoji": "🎤", "lessons": [
-            { "title": "피동 표현과 인용 표현", "area": "문법", "textbook": "", "worksheet": "" },
-            { "title": "자신감 있는 발표", "area": "듣기·말하기", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 4, "title": "생각이 자라는 시간", "emoji": "🌱", "lessons": [
-            { "title": "매체로 만나는 세상", "area": "매체", "textbook": "", "worksheet": "" },
-            { "title": "따져 보며 바르게 읽기", "area": "읽기", "textbook": "", "worksheet": "" }
-          ]}
+          {
+            "no": 1,
+            "title": "목소리와 시선을 따라서",
+            "emoji": "👀",
+            "lessons": [
+              {
+                "title": "세상에서 가장 따뜻했던 저녁",
+                "area": "문학",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "멍키 스패너",
+                "area": "문학",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 2,
+            "title": "설명과 논증의 세계",
+            "emoji": "🔍",
+            "lessons": [
+              {
+                "title": "설명과 논증 파악하며 읽기",
+                "area": "읽기",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "설명하는 글 쓰기",
+                "area": "쓰기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 3,
+            "title": "정확하게, 자신감 있게",
+            "emoji": "🎤",
+            "lessons": [
+              {
+                "title": "피동 표현과 인용 표현",
+                "area": "문법",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "자신감 있는 발표",
+                "area": "듣기·말하기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 4,
+            "title": "생각이 자라는 시간",
+            "emoji": "🌱",
+            "lessons": [
+              {
+                "title": "매체로 만나는 세상",
+                "area": "매체",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "따져 보며 바르게 읽기",
+                "area": "읽기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          }
         ],
         "2": [
-          { "no": 1, "title": "삶을 읽고 마음을 나누며", "emoji": "🎎", "lessons": [
-            { "title": "양반전", "area": "문학", "textbook": "", "worksheet": "" },
-            { "title": "마음을 잇는 대화", "area": "듣기·말하기", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 2, "title": "스스로 읽고 쓰는 힘", "emoji": "💪", "lessons": [
-            { "title": "점검하고 조정하며 읽기", "area": "읽기", "textbook": "", "worksheet": "" },
-            { "title": "짜임새 있는 글 쓰기", "area": "쓰기", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 3, "title": "우리말, 우리글", "emoji": "🔤", "lessons": [
-            { "title": "국어의 음운 체계", "area": "문법", "textbook": "", "worksheet": "" },
-            { "title": "국어의 문자 체계", "area": "문법", "textbook": "", "worksheet": "" }
-          ]},
-          { "no": 4, "title": "소중한 경험, 빛나는 표현", "emoji": "✨", "badge": "통합", "lessons": [
-            { "title": "개성적인 발상과 표현", "area": "쓰기", "textbook": "", "worksheet": "" },
-            { "title": "영상 매체 자료로 전하는 이야기", "area": "매체", "textbook": "", "worksheet": "" }
-          ]}
+          {
+            "no": 1,
+            "title": "삶을 읽고 마음을 나누며",
+            "emoji": "🎎",
+            "lessons": [
+              {
+                "title": "양반전",
+                "area": "문학",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "마음을 잇는 대화",
+                "area": "듣기·말하기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 2,
+            "title": "스스로 읽고 쓰는 힘",
+            "emoji": "💪",
+            "lessons": [
+              {
+                "title": "점검하고 조정하며 읽기",
+                "area": "읽기",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "짜임새 있는 글 쓰기",
+                "area": "쓰기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 3,
+            "title": "우리말, 우리글",
+            "emoji": "🔤",
+            "lessons": [
+              {
+                "title": "국어의 음운 체계",
+                "area": "문법",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "국어의 문자 체계",
+                "area": "문법",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          },
+          {
+            "no": 4,
+            "title": "소중한 경험, 빛나는 표현",
+            "emoji": "✨",
+            "badge": "통합",
+            "lessons": [
+              {
+                "title": "개성적인 발상과 표현",
+                "area": "쓰기",
+                "textbook": "",
+                "worksheet": ""
+              },
+              {
+                "title": "영상 매체 자료로 전하는 이야기",
+                "area": "매체",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
+          }
         ]
       }
     },
@@ -107,38 +353,180 @@
       "ready": false,
       "semesters": {
         "1": [
-          { "no": 1, "title": "", "emoji": "📦", "lessons": [] },
-          { "no": 2, "title": "", "emoji": "📦", "lessons": [] },
-          { "no": 3, "title": "", "emoji": "📦", "lessons": [] },
-          { "no": 4, "title": "", "emoji": "📦", "lessons": [] }
+          {
+            "no": 1,
+            "title": "",
+            "emoji": "📦",
+            "lessons": []
+          },
+          {
+            "no": 2,
+            "title": "",
+            "emoji": "📦",
+            "lessons": []
+          },
+          {
+            "no": 3,
+            "title": "",
+            "emoji": "📦",
+            "lessons": []
+          },
+          {
+            "no": 4,
+            "title": "",
+            "emoji": "📦",
+            "lessons": []
+          }
         ],
         "2": [
-          { "no": 1, "title": "", "emoji": "📦", "lessons": [] },
-          { "no": 2, "title": "", "emoji": "📦", "lessons": [] },
-          { "no": 3, "title": "", "emoji": "📦", "lessons": [] },
-          { "no": 4, "title": "", "emoji": "📦", "lessons": [] }
+          {
+            "no": 1,
+            "title": "",
+            "emoji": "📦",
+            "lessons": []
+          },
+          {
+            "no": 2,
+            "title": "",
+            "emoji": "📦",
+            "lessons": []
+          },
+          {
+            "no": 3,
+            "title": "",
+            "emoji": "📦",
+            "lessons": []
+          },
+          {
+            "no": 4,
+            "title": "",
+            "emoji": "📦",
+            "lessons": []
+          }
         ]
       }
     }
   ],
   "assessments": [
-    { "id": "a1", "grade": 1, "semester": 1, "unit": "4. 성장의 시간", "kind": "process", "title": "나의 성장 순간 마인드맵", "desc": "옥수수 뺑소니를 읽고 내 경험을 떠올려 정리한 생각 그물", "author": "1학년 3반 모둠 4", "emoji": "🗺️", "color": "pink", "likes": 12 },
-    { "id": "a2", "grade": 1, "semester": 1, "unit": "4. 성장의 시간", "kind": "result", "title": "정서를 담은 시 한 편", "desc": "초고에서 퇴고까지, 마음을 꾹꾹 눌러 담은 완성작", "author": "1학년 1반 김OO", "emoji": "📜", "color": "butter", "likes": 21 },
-    { "id": "a3", "grade": 1, "semester": 2, "unit": "4. 너의 생각, 나의 의견", "kind": "process", "title": "주장하는 글 개요표", "desc": "근거 세 가지를 고르고 순서를 정한 개요 활동지", "author": "1학년 2반 이OO", "emoji": "🧾", "color": "sky", "likes": 8 },
-    { "id": "a4", "grade": 2, "semester": 1, "unit": "2. 설명과 논증의 세계", "kind": "process", "title": "설명 방법 찾기 탐정 노트", "desc": "정의, 예시, 비교와 대조를 찾아 색깔 펜으로 표시했어요", "author": "2학년 4반 모둠 2", "emoji": "🕵️", "color": "mint", "likes": 15 },
-    { "id": "a5", "grade": 2, "semester": 1, "unit": "3. 정확하게, 자신감 있게", "kind": "result", "title": "자신감 있는 발표 영상", "desc": "3분 발표 영상과 동료 평가지를 함께 올렸어요", "author": "2학년 1반 박OO", "emoji": "🎬", "color": "peach", "likes": 19 },
-    { "id": "a6", "grade": 2, "semester": 2, "unit": "1. 삶을 읽고 마음을 나누며", "kind": "result", "title": "양반전 인물 인터뷰 카드뉴스", "desc": "박지원에게 묻고 싶은 질문으로 만든 카드뉴스 6장", "author": "2학년 3반 모둠 1", "emoji": "🎎", "color": "lilac", "likes": 24 },
-    { "id": "a7", "grade": 2, "semester": 2, "unit": "4. 소중한 경험, 빛나는 표현", "kind": "process", "title": "영상 스토리보드 초안", "desc": "장면, 자막, 배경 음악을 칸마다 적은 콘티", "author": "2학년 2반 최OO", "emoji": "🎞️", "color": "butter", "likes": 11 },
-    { "id": "a8", "grade": 3, "semester": 1, "unit": "교과서 준비 중", "kind": "result", "title": "3학년 작품 자리", "desc": "새 교과서와 함께 멋진 결과물이 들어올 자리예요", "author": "3학년", "emoji": "🎁", "color": "sky", "likes": 3 }
+    {
+      "id": "a1",
+      "grade": 1,
+      "semester": 1,
+      "unit": "4. 성장의 시간",
+      "kind": "process",
+      "title": "나의 성장 순간 마인드맵",
+      "desc": "옥수수 뺑소니를 읽고 내 경험을 떠올려 정리한 생각 그물",
+      "author": "1학년 3반 모둠 4",
+      "emoji": "🗺️",
+      "color": "pink",
+      "likes": 12
+    },
+    {
+      "id": "a2",
+      "grade": 1,
+      "semester": 1,
+      "unit": "4. 성장의 시간",
+      "kind": "result",
+      "title": "정서를 담은 시 한 편",
+      "desc": "초고에서 퇴고까지, 마음을 꾹꾹 눌러 담은 완성작",
+      "author": "1학년 1반 김○○",
+      "emoji": "📜",
+      "color": "butter",
+      "likes": 21
+    },
+    {
+      "id": "a3",
+      "grade": 1,
+      "semester": 2,
+      "unit": "4. 너의 생각, 나의 의견",
+      "kind": "process",
+      "title": "주장하는 글 개요표",
+      "desc": "근거 세 가지를 고르고 순서를 정한 개요 활동지",
+      "author": "1학년 2반 이○○",
+      "emoji": "🧾",
+      "color": "sky",
+      "likes": 8
+    },
+    {
+      "id": "a4",
+      "grade": 2,
+      "semester": 1,
+      "unit": "2. 설명과 논증의 세계",
+      "kind": "process",
+      "title": "설명 방법 찾기 탐정 노트",
+      "desc": "정의, 예시, 비교와 대조를 찾아 색깔 펜으로 표시했어요",
+      "author": "2학년 4반 모둠 2",
+      "emoji": "🕵️",
+      "color": "mint",
+      "likes": 15
+    },
+    {
+      "id": "a5",
+      "grade": 2,
+      "semester": 1,
+      "unit": "3. 정확하게, 자신감 있게",
+      "kind": "result",
+      "title": "자신감 있는 발표 영상",
+      "desc": "3분 발표 영상과 동료 평가지를 함께 올렸어요",
+      "author": "2학년 1반 박○○",
+      "emoji": "🎬",
+      "color": "peach",
+      "likes": 19
+    },
+    {
+      "id": "a6",
+      "grade": 2,
+      "semester": 2,
+      "unit": "1. 삶을 읽고 마음을 나누며",
+      "kind": "result",
+      "title": "양반전 인물 인터뷰 카드뉴스",
+      "desc": "박지원에게 묻고 싶은 질문으로 만든 카드뉴스 6장",
+      "author": "2학년 3반 모둠 1",
+      "emoji": "🎎",
+      "color": "lilac",
+      "likes": 24
+    },
+    {
+      "id": "a7",
+      "grade": 2,
+      "semester": 2,
+      "unit": "4. 소중한 경험, 빛나는 표현",
+      "kind": "process",
+      "title": "영상 스토리보드 초안",
+      "desc": "장면, 자막, 배경 음악을 칸마다 적은 콘티",
+      "author": "2학년 2반 최○○",
+      "emoji": "🎞️",
+      "color": "butter",
+      "likes": 11
+    },
+    {
+      "id": "a8",
+      "grade": 3,
+      "semester": 1,
+      "unit": "교과서 준비 중",
+      "kind": "result",
+      "title": "3학년 작품 자리",
+      "desc": "새 교과서와 함께 멋진 결과물이 들어올 자리예요",
+      "author": "3학년",
+      "emoji": "🎁",
+      "color": "sky",
+      "likes": 3
+    }
   ],
-  "terms": [
-    { "word": "품사", "meaning": "단어를 기능, 형태, 의미에 따라 나눈 갈래", "unit": "1-1 · 3단원" },
-    { "word": "요약", "meaning": "글의 중요한 내용을 간추려 짧게 나타내는 것", "unit": "1-1 · 2단원" },
-    { "word": "새말", "meaning": "새로 생긴 물건이나 개념을 나타내려고 새로 만든 말", "unit": "1-2 · 3단원" },
-    { "word": "논증", "meaning": "주장을 근거를 들어 옳다고 밝히는 것", "unit": "2-1 · 2단원" },
-    { "word": "피동 표현", "meaning": "주어가 남의 행동에 의해 움직이게 되는 것을 나타내는 표현", "unit": "2-1 · 3단원" },
-    { "word": "음운", "meaning": "말의 뜻을 구별해 주는 소리의 가장 작은 단위", "unit": "2-2 · 3단원" },
-    { "word": "풍자", "meaning": "현실의 부정적인 모습을 웃음으로 비꼬아 드러내는 것", "unit": "2-2 · 1단원" },
-    { "word": "추론", "meaning": "드러난 내용을 바탕으로 드러나지 않은 내용을 짐작하는 것", "unit": "1-2 · 4단원" }
+  "questions": [
+    "내가 요즘 가장 자주 쓰는 말은 무엇인가요? 그 말은 나를 어떻게 보여 줄까요?",
+    "같은 말이라도 듣는 사람에 따라 다르게 들리는 까닭은 무엇일까요?",
+    "긴 글을 짧게 줄일 때 꼭 남겨야 하는 것은 무엇일까요?",
+    "나를 한 단어로 표현한다면 어떤 단어를 고르고 싶나요? 그 까닭은요?",
+    "친구와 의견이 다를 때 내 생각을 부드럽게 전하려면 어떻게 말하면 좋을까요?",
+    "요즘 새로 생긴 말 가운데 오래 남을 것 같은 말은 무엇인가요?",
+    "소설 속 인물에게 질문 하나를 할 수 있다면 누구에게 무엇을 묻고 싶나요?",
+    "광고나 영상 속 정보를 믿기 전에 무엇을 확인해야 할까요?",
+    "좋은 근거와 그렇지 않은 근거는 어떻게 구별할 수 있을까요?",
+    "발표할 때 떨리지 않으려면 어떤 준비가 가장 도움이 될까요?",
+    "한글이 없었다면 우리의 하루는 어떻게 달라졌을까요?",
+    "오늘 하루를 날씨에 빗댄다면 어떤 날씨일까요? 그 까닭은요?",
+    "글을 다 쓴 뒤 다시 읽어 보면 무엇이 새롭게 보이나요?",
+    "내 경험 가운데 이야기로 쓰고 싶은 순간은 언제인가요?"
   ]
 }

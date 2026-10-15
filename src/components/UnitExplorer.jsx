@@ -32,7 +32,7 @@ function UnitModal({ unit, tone, grade, semester, onClose, notify }) {
     >
       {unit && (
         <>
-          <p className="mb-4 text-sm text-ink/70">
+          <p className="mb-4 text-sm text-ink/80">
             {grade}학년 {semester}학기 · 소단원을 골라 교과서 자료나 활동지를 열어 보세요.
           </p>
           <ol className="space-y-3">
@@ -106,7 +106,7 @@ export default function UnitExplorer({ grades, grade, semester, onGrade, onSemes
                 </button>
               ))}
             </div>
-            <span className="font-hand text-xl text-ink/70">국어 {g.grade}-{semester} · 미래엔(신유식)</span>
+            <span className="font-jua text-base text-ink/80">국어 {g.grade}-{semester} · 미래엔(신유식)</span>
           </div>
         </SectionTitle>
 
@@ -143,7 +143,7 @@ export default function UnitExplorer({ grades, grade, semester, onGrade, onSemes
                       {u.badge && <span className="chip mt-1 shrink-0 bg-lilac">{u.badge}</span>}
                     </div>
                     {empty ? (
-                      <div className="mt-3 flex flex-1 flex-col items-start gap-2 text-sm text-ink/60">
+                      <div className="mt-3 flex flex-1 flex-col items-start gap-2 text-sm text-ink/80">
                         <span className="chip bg-butter">
                           <PackageOpen size={12} /> 교과서 준비 중
                         </span>
@@ -153,13 +153,13 @@ export default function UnitExplorer({ grades, grade, semester, onGrade, onSemes
                       <ul className="mt-3 flex-1 space-y-1.5 text-sm">
                         {u.lessons.map((l, j) => (
                           <li key={l.title} className="flex items-center gap-1.5">
-                            <span className="font-jua text-ink/50">({j + 1})</span> {l.title}
+                            <span className="font-jua text-ink/70">({j + 1})</span> {l.title}
                           </li>
                         ))}
                       </ul>
                     )}
                     {!empty && (
-                      <span className="mt-4 inline-flex items-center gap-1 self-end font-jua text-sm text-ink/70 transition-transform group-hover:translate-x-1">
+                      <span className="mt-4 inline-flex items-center gap-1 self-end font-jua text-sm text-ink/80 transition-transform group-hover:translate-x-1">
                         자료 · 활동지 열기 <ChevronRight size={16} strokeWidth={3} />
                       </span>
                     )}

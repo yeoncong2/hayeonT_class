@@ -5,8 +5,7 @@ export default {
     extend: {
       fontFamily: {
         jua: ['Jua', 'sans-serif'],
-        body: ['"Gowun Dodum"', 'sans-serif'],
-        hand: ['Gaegu', 'cursive'],
+        body: ['"Noto Sans KR"', 'sans-serif'],
       },
       colors: {
         ink: '#3D3552',

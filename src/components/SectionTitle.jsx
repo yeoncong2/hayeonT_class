@@ -13,7 +13,7 @@ export default function SectionTitle({ no, tag, tone = 'bg-pink', title, desc, c
         <span className="font-jua">SECTION {no}</span> · {tag}
       </span>
       <h2 className="text-3xl leading-tight sm:text-4xl">{title}</h2>
-      {desc && <p className="max-w-2xl text-base text-ink/70 sm:text-lg">{desc}</p>}
+      {desc && <p className="max-w-2xl text-base text-ink/80 sm:text-lg">{desc}</p>}
       {children}
     </motion.div>
   );

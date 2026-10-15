@@ -61,9 +61,9 @@ export default function GradePicker({ grades, current, onPick }) {
                       <ArrowRight size={20} strokeWidth={3} />
                     </span>
                   </div>
-                  <p className="mt-1 font-hand text-xl text-ink/75">{g.tagline}</p>
-                  <p className="mt-3 text-sm text-ink/60">
-                    {g.ready ? `1학기·2학기 · 4단원씩 · 소단원 ${countLessons(g)}개` : '새 교과서가 나오면 채워질 예정이에요'}
+                  <p className="mt-1 font-jua text-base text-ink/80">{g.tagline}</p>
+                  <p className="mt-3 text-sm text-ink/80">
+                    {g.ready ? `1·2학기 각 4단원 · 소단원 ${countLessons(g)}개` : '새 교과서가 나오면 채워질 예정이에요'}
                   </p>
                 </div>
               </motion.button>

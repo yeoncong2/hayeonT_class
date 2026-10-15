@@ -135,13 +135,13 @@ export default function AssessmentGallery({ items, grades }) {
                     <span className={`chip absolute bottom-2 left-2 ${k.tone}`}>{k.text}</span>
                   </div>
                   <div className="flex flex-1 flex-col px-2 pb-1 pt-4">
-                    <span className="text-xs font-bold text-ink/60">
+                    <span className="text-xs font-bold text-ink/80">
                       {w.grade}학년 {w.semester}학기 · {w.unit}
                     </span>
                     <h3 className="mt-1 text-xl leading-snug">{w.title}</h3>
-                    <p className="mt-1 text-sm text-ink/70">{w.desc}</p>
+                    <p className="mt-1 text-sm text-ink/80">{w.desc}</p>
                     <div className="mt-auto flex items-center justify-between pt-4">
-                      <span className="font-hand text-lg text-ink/70">{w.author}</span>
+                      <span className="font-jua text-base text-ink/80">{w.author}</span>
                       <LikeButton count={likes[w.id] ?? w.likes} liked={!!liked[w.id]} onClick={() => like(w)} />
                     </div>
                   </div>
@@ -150,7 +150,7 @@ export default function AssessmentGallery({ items, grades }) {
             })}
           </AnimatePresence>
         </motion.div>
-        {list.length === 0 && <p className="card mt-2 border-dashed p-8 text-center font-hand text-2xl text-ink/60">아직 올라온 작품이 없어요. 곧 채워질 거예요!</p>}
+        {list.length === 0 && <p className="card mt-2 border-dashed p-8 text-center font-jua text-xl text-ink/80">아직 올라온 작품이 없어요. 곧 채워질 거예요!</p>}
       </div>
     </section>
   );

@@ -53,7 +53,7 @@ export default function App() {
         />
         <AssessmentGallery items={content.assessments} grades={content.grades} />
       </main>
-      <Footer title={content.site.title} terms={content.terms} live={live} />
+      <Footer title={content.site.title} questions={content.questions} live={live} />
       <Toast message={toast} />
     </div>
   );
