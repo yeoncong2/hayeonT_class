@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Heart, Pencil, Trophy } from 'lucide-react';
+import { FileText, Heart, Image as ImageIcon, Link2, Paperclip, Pencil, Presentation, Table, Trophy } from 'lucide-react';
 import { TONE } from '../lib/colors';
 import { sendLike } from '../lib/useContent';
 import SectionTitle from './SectionTitle';
@@ -11,6 +11,16 @@ const KINDS = [
   { value: 'result', label: '결과물', icon: Trophy, tone: 'bg-pink' },
 ];
 const KIND_LABEL = { process: { text: '과정물 ✏️', tone: 'bg-sky' }, result: { text: '결과물 🏆', tone: 'bg-pink' } };
+
+export const FILE_TYPE = {
+  pdf: { label: 'PDF 보기', icon: FileText, tone: 'bg-pink' },
+  sheet: { label: '구글 시트', icon: Table, tone: 'bg-mint' },
+  doc: { label: '문서 보기', icon: FileText, tone: 'bg-sky' },
+  slide: { label: '슬라이드', icon: Presentation, tone: 'bg-butter' },
+  image: { label: '사진 보기', icon: ImageIcon, tone: 'bg-lilac' },
+  link: { label: '링크 열기', icon: Link2, tone: 'bg-white' },
+  file: { label: '파일 받기', icon: Paperclip, tone: 'bg-white' },
+};
 
 function LikeButton({ count, liked, onClick }) {
   const [burst, setBurst] = useState(0);
@@ -140,6 +150,25 @@ export default function AssessmentGallery({ items, grades }) {
                     </span>
                     <h3 className="mt-1 text-xl leading-snug">{w.title}</h3>
                     <p className="mt-1 text-sm text-ink/80">{w.desc}</p>
+                    {w.files?.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {w.files.map((f) => {
+                          const meta = FILE_TYPE[f.type] || FILE_TYPE.link;
+                          const Icon = meta.icon;
+                          return (
+                            <a
+                              key={f.id}
+                              href={f.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`inline-flex items-center gap-1 rounded-full border-2 border-ink px-3 py-1 font-jua text-sm shadow-pop-sm transition-transform hover:-translate-y-0.5 ${meta.tone}`}
+                            >
+                              <Icon size={14} strokeWidth={2.5} /> {f.label || meta.label}
+                            </a>
+                          );
+                        })}
+                      </div>
+                    )}
                     <div className="mt-auto flex items-center justify-between pt-4">
                       <span className="font-jua text-base text-ink/80">{w.author}</span>
                       <LikeButton count={likes[w.id] ?? w.likes} liked={!!liked[w.id]} onClick={() => like(w)} />

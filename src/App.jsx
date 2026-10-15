@@ -5,12 +5,23 @@ import UnitExplorer from './components/UnitExplorer';
 import AssessmentGallery from './components/AssessmentGallery';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
+import AdminPanel from './components/AdminPanel';
 import useContent from './lib/useContent';
 
 // 주소창의 #grade-2 같은 해시로 학년을 바로 열 수 있어요.
 const gradeFromHash = () => Number((window.location.hash.match(/^#grade-(\d)/) || [])[1]) || 1;
 
 export default function App() {
+  const [admin, setAdmin] = useState(window.location.hash === '#admin');
+  useEffect(() => {
+    const on = () => setAdmin(window.location.hash === '#admin');
+    window.addEventListener('hashchange', on);
+    return () => window.removeEventListener('hashchange', on);
+  }, []);
+  return admin ? <AdminPanel /> : <Site />;
+}
+
+function Site() {
   const { content, live } = useContent();
   const [grade, setGrade] = useState(gradeFromHash);
   const [semester, setSemester] = useState('1');
