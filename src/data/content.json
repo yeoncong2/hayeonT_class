@@ -407,112 +407,139 @@
       }
     }
   ],
-  "assessments": [
+  "tasks": [
     {
-      "id": "a1",
+      "id": "g1-energy",
       "grade": 1,
-      "semester": 1,
-      "unit": "4. 성장의 시간",
-      "kind": "process",
-      "title": "나의 성장 순간 마인드맵",
-      "desc": "옥수수 뺑소니를 읽고 내 경험을 떠올려 정리한 생각 그물",
-      "author": "1학년 3반 모둠 4",
-      "emoji": "🗺️",
+      "emoji": "⚡",
       "color": "pink",
-      "likes": 12
+      "title": "에너지 카드 뉴스 만들기",
+      "units": [
+        {
+          "semester": 2,
+          "no": 4,
+          "lesson": "추론하며 읽기"
+        }
+      ],
+      "desc": "에너지에 관한 글을 추론하며 읽고, 핵심 정보를 카드 뉴스로 만들어 전해요."
     },
     {
-      "id": "a2",
+      "id": "g1-argue",
       "grade": 1,
-      "semester": 1,
-      "unit": "4. 성장의 시간",
-      "kind": "result",
-      "title": "정서를 담은 시 한 편",
-      "desc": "초고에서 퇴고까지, 마음을 꾹꾹 눌러 담은 완성작",
-      "author": "1학년 1반 김○○",
+      "emoji": "🗣️",
+      "color": "butter",
+      "title": "주장하는 글쓰기",
+      "units": [
+        {
+          "semester": 2,
+          "no": 1,
+          "lesson": "토의하기"
+        },
+        {
+          "semester": 2,
+          "no": 4,
+          "lesson": "주장하는 글 쓰기"
+        }
+      ],
+      "desc": "토의로 생각을 넓힌 뒤, 타당한 근거를 들어 내 주장을 글로 펼쳐요."
+    },
+    {
+      "id": "g1-reading",
+      "grade": 1,
+      "emoji": "📚",
+      "color": "sky",
+      "title": "독서 성장 포트폴리오",
+      "units": [
+        {
+          "label": "전체 단원"
+        }
+      ],
+      "desc": "한 해 동안 읽은 책과 생각의 변화를 차곡차곡 모아 나의 독서 성장 과정을 보여 줘요."
+    },
+    {
+      "id": "g2-hunmin",
+      "grade": 2,
       "emoji": "📜",
-      "color": "butter",
-      "likes": 21
-    },
-    {
-      "id": "a3",
-      "grade": 1,
-      "semester": 2,
-      "unit": "4. 너의 생각, 나의 의견",
-      "kind": "process",
-      "title": "주장하는 글 개요표",
-      "desc": "근거 세 가지를 고르고 순서를 정한 개요 활동지",
-      "author": "1학년 2반 이○○",
-      "emoji": "🧾",
-      "color": "sky",
-      "likes": 8
-    },
-    {
-      "id": "a4",
-      "grade": 2,
-      "semester": 1,
-      "unit": "2. 설명과 논증의 세계",
-      "kind": "process",
-      "title": "설명 방법 찾기 탐정 노트",
-      "desc": "정의, 예시, 비교와 대조를 찾아 색깔 펜으로 표시했어요",
-      "author": "2학년 4반 모둠 2",
-      "emoji": "🕵️",
       "color": "mint",
-      "likes": 15
+      "title": "훈민정음 네 컷 만화 그리기",
+      "units": [
+        {
+          "semester": 2,
+          "no": 3,
+          "lesson": "국어의 문자 체계"
+        }
+      ],
+      "desc": "훈민정음의 창제 원리와 특징을 네 컷 만화로 재미있게 풀어내요."
     },
     {
-      "id": "a5",
+      "id": "g2-news",
       "grade": 2,
-      "semester": 1,
-      "unit": "3. 정확하게, 자신감 있게",
-      "kind": "result",
-      "title": "자신감 있는 발표 영상",
-      "desc": "3분 발표 영상과 동료 평가지를 함께 올렸어요",
-      "author": "2학년 1반 박○○",
-      "emoji": "🎬",
+      "emoji": "📺",
       "color": "peach",
-      "likes": 19
+      "title": "추억을 뉴스하다",
+      "units": [
+        {
+          "semester": 2,
+          "no": 4,
+          "lesson": "소중한 경험, 빛나는 표현"
+        }
+      ],
+      "desc": "나의 소중한 추억을 개성 있게 표현해 뉴스로 전해요."
     },
     {
-      "id": "a6",
+      "id": "g2-reading",
       "grade": 2,
-      "semester": 2,
-      "unit": "1. 삶을 읽고 마음을 나누며",
-      "kind": "result",
-      "title": "양반전 인물 인터뷰 카드뉴스",
-      "desc": "박지원에게 묻고 싶은 질문으로 만든 카드뉴스 6장",
-      "author": "2학년 3반 모둠 1",
-      "emoji": "🎎",
-      "color": "lilac",
-      "likes": 24
-    },
-    {
-      "id": "a7",
-      "grade": 2,
-      "semester": 2,
-      "unit": "4. 소중한 경험, 빛나는 표현",
-      "kind": "process",
-      "title": "영상 스토리보드 초안",
-      "desc": "장면, 자막, 배경 음악을 칸마다 적은 콘티",
-      "author": "2학년 2반 최○○",
-      "emoji": "🎞️",
-      "color": "butter",
-      "likes": 11
-    },
-    {
-      "id": "a8",
-      "grade": 3,
-      "semester": 1,
-      "unit": "교과서 준비 중",
-      "kind": "result",
-      "title": "3학년 작품 자리",
-      "desc": "새 교과서와 함께 멋진 결과물이 들어올 자리예요",
-      "author": "3학년",
-      "emoji": "🎁",
+      "emoji": "📚",
       "color": "sky",
-      "likes": 3
+      "title": "독서 성장 포트폴리오",
+      "units": [
+        {
+          "label": "전체 단원"
+        }
+      ],
+      "desc": "한 해 동안 읽은 책과 생각의 변화를 차곡차곡 모아 나의 독서 성장 과정을 보여 줘요."
+    },
+    {
+      "id": "g3-era",
+      "grade": 3,
+      "emoji": "🫏",
+      "color": "lilac",
+      "title": "시대 뉴스 만들기",
+      "units": [
+        {
+          "label": "노새 두 마리"
+        }
+      ],
+      "desc": "〈노새 두 마리〉에 담긴 시대 상황을 살펴보고 그 시대의 뉴스로 만들어요."
+    },
+    {
+      "id": "g3-argue",
+      "grade": 3,
+      "emoji": "🗣️",
+      "color": "butter",
+      "title": "주장하는 글쓰기",
+      "units": [
+        {
+          "label": "주장하는 글쓰기"
+        }
+      ],
+      "desc": "쟁점에 대한 내 입장을 정하고, 타당한 근거로 설득하는 글을 써요."
+    },
+    {
+      "id": "g3-reading",
+      "grade": 3,
+      "emoji": "📚",
+      "color": "sky",
+      "title": "독서 성장 포트폴리오",
+      "units": [
+        {
+          "label": "전체 단원"
+        }
+      ],
+      "desc": "한 해 동안 읽은 책과 생각의 변화를 차곡차곡 모아 나의 독서 성장 과정을 보여 줘요."
     }
   ],
+  "assessments": [],
   "questions": [
     "내가 요즘 가장 자주 쓰는 말은 무엇인가요? 그 말은 나를 어떻게 보여 줄까요?",
     "같은 말이라도 듣는 사람에 따라 다르게 들리는 까닭은 무엇일까요?",

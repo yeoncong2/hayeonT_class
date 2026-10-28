@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BUCKET, fetchAssessments, supabase } from '../lib/supabase';
 import { FILE_TYPE } from './AssessmentGallery';
+import content from '../data/content.json';
 
 const COLORS = ['pink', 'peach', 'butter', 'mint', 'sky', 'lilac'];
-const EMPTY = { grade: 1, semester: 1, unit: '', kind: 'process', title: '', description: '', author: '', emoji: '📄', color: 'sky' };
+const firstTask = (g) => content.tasks.find((t) => t.grade === g)?.title || '';
+const EMPTY = { grade: 1, semester: 1, unit: firstTask(1), kind: 'process', title: '', description: '', author: '', emoji: '📄', color: 'sky' };
 
 const guessType = (url) => {
   const u = url.toLowerCase();
@@ -20,6 +22,7 @@ const typeFromFile = (f) => {
   return guessType(f.name);
 };
 
+const OTHER = '__other';
 const inputCls = 'w-full rounded-xl border-2 border-ink bg-white px-3 py-2';
 
 export default function AdminPanel() {
@@ -81,7 +84,7 @@ export default function AdminPanel() {
 
   const save = async (e) => {
     e.preventDefault();
-    if (!form.title.trim() || !form.unit.trim()) return setMsg('단원과 제목은 꼭 적어 주세요.');
+    if (!form.title.trim() || !form.unit.trim()) return setMsg('수행평가(단원)와 제목은 꼭 적어 주세요.');
     setBusy(true);
     const { data, error } = await supabase.from('assessments').insert(form).select().single();
     if (error) {
@@ -113,6 +116,7 @@ export default function AdminPanel() {
     reload();
   };
 
+  const taskTitles = content.tasks.filter((t) => t.grade === form.grade).map((t) => t.title);
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: ['grade', 'semester'].includes(k) ? Number(e.target.value) : e.target.value }));
 
   return (
@@ -134,12 +138,26 @@ export default function AdminPanel() {
         <>
           <form onSubmit={save} className="card mt-4 grid gap-3 p-5">
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <label>학년<select className={inputCls} value={form.grade} onChange={set('grade')}>{[1, 2, 3].map((g) => <option key={g} value={g}>{g}학년</option>)}</select></label>
+              <label>학년<select className={inputCls} value={form.grade} onChange={(e) => setForm((f) => ({ ...f, grade: Number(e.target.value), unit: firstTask(Number(e.target.value)) }))}>{[1, 2, 3].map((g) => <option key={g} value={g}>{g}학년</option>)}</select></label>
               <label>학기<select className={inputCls} value={form.semester} onChange={set('semester')}>{[1, 2].map((s) => <option key={s} value={s}>{s}학기</option>)}</select></label>
               <label>종류<select className={inputCls} value={form.kind} onChange={set('kind')}><option value="process">과정물</option><option value="result">결과물</option></select></label>
               <label>색<select className={inputCls} value={form.color} onChange={set('color')}>{COLORS.map((c) => <option key={c}>{c}</option>)}</select></label>
             </div>
-            <label>단원<input className={inputCls} placeholder="예: 4. 성장의 시간" value={form.unit} onChange={set('unit')} /></label>
+            {/* 수행평가를 고르면 그 이름이 unit 에 저장되고, 전시관에서 그 수행평가 카드 안에 보여요. */}
+            <label>
+              수행평가
+              <select
+                className={inputCls}
+                value={taskTitles.includes(form.unit) ? form.unit : OTHER}
+                onChange={(e) => setForm((f) => ({ ...f, unit: e.target.value === OTHER ? '' : e.target.value }))}
+              >
+                {taskTitles.map((t) => <option key={t} value={t}>{t}</option>)}
+                <option value={OTHER}>그 밖의 작품 (단원 직접 적기)</option>
+              </select>
+            </label>
+            {!taskTitles.includes(form.unit) && (
+              <label>단원<input className={inputCls} placeholder="예: 4. 성장의 시간" value={form.unit} onChange={set('unit')} /></label>
+            )}
             <label>제목<input className={inputCls} value={form.title} onChange={set('title')} /></label>
             <label>설명<textarea className={inputCls} rows={2} value={form.description} onChange={set('description')} /></label>
             <div className="grid grid-cols-[1fr_5rem] gap-3">
@@ -178,7 +196,7 @@ export default function AdminPanel() {
             {items.map((it) => (
               <li key={it.id} className="card flex flex-wrap items-center justify-between gap-2 p-3">
                 <span>
-                  {it.emoji} <b>{it.title}</b> <small>· {it.grade}학년 {it.semester}학기 · {it.kind === 'process' ? '과정물' : '결과물'} · 자료 {it.files.length}개 {it.published ? '' : '· (숨김)'}</small>
+                  {it.emoji} <b>{it.title}</b> <small>· {it.grade}학년 {it.semester}학기 · {it.unit} · {it.kind === 'process' ? '과정물' : '결과물'} · 자료 {it.files.length}개 {it.published ? '' : '· (숨김)'}</small>
                 </span>
                 <span className="flex gap-2 font-jua text-sm">
                   <button onClick={() => togglePublish(it)} className="rounded-full border-2 border-ink px-3">{it.published ? '숨기기' : '공개하기'}</button>

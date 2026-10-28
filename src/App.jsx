@@ -25,6 +25,7 @@ function Site() {
   const { content, live } = useContent();
   const [grade, setGrade] = useState(gradeFromHash);
   const [semester, setSemester] = useState('1');
+  const [openNo, setOpenNo] = useState(null);
   const [toast, setToast] = useState('');
   const timer = useRef(null);
 
@@ -39,6 +40,17 @@ function Site() {
   const pickGrade = (g) => {
     setGrade(g);
     history.replaceState(null, '', `#grade-${g}`);
+    requestAnimationFrame(scrollToUnits);
+  };
+
+  // 수행평가 카드의 관련 단원을 누르면 그 단원 창을 바로 열어 줘요.
+  const showUnit = (g, ref) => {
+    setGrade(g);
+    history.replaceState(null, '', `#grade-${g}`);
+    if (ref?.semester) {
+      setSemester(String(ref.semester));
+      setOpenNo(ref.no);
+    }
     requestAnimationFrame(scrollToUnits);
   };
 
@@ -60,9 +72,11 @@ function Site() {
             history.replaceState(null, '', `#grade-${g}`);
           }}
           onSemester={setSemester}
+          openNo={openNo}
+          onOpen={setOpenNo}
           notify={notify}
         />
-        <AssessmentGallery items={content.assessments} grades={content.grades} />
+        <AssessmentGallery tasks={content.tasks} items={content.assessments} grades={content.grades} onUnit={showUnit} />
       </main>
       <Footer title={content.site.title} questions={content.questions} live={live} />
       <Toast message={toast} />

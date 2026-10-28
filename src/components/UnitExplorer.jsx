@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BookOpen, FileText, ChevronRight, PackageOpen } from 'lucide-react';
 import { TONE, UNIT_TONES, AREA_TONE } from '../lib/colors';
@@ -65,10 +64,10 @@ function UnitModal({ unit, tone, grade, semester, onClose, notify }) {
   );
 }
 
-export default function UnitExplorer({ grades, grade, semester, onGrade, onSemester, notify }) {
-  const [open, setOpen] = useState(null);
+export default function UnitExplorer({ grades, grade, semester, onGrade, onSemester, openNo, onOpen, notify }) {
   const g = grades.find((x) => x.grade === grade) || grades[0];
   const units = g.semesters[semester] || [];
+  const openIdx = units.findIndex((u) => u.no === openNo && u.lessons.length > 0);
   const t = TONE[g.color];
 
   return (
@@ -125,7 +124,7 @@ export default function UnitExplorer({ grades, grade, semester, onGrade, onSemes
               return (
                 <motion.button
                   key={u.no}
-                  onClick={() => (empty ? notify('📦 3학년 교과서가 나오면 채워질 거예요!') : setOpen({ unit: u, tone: UNIT_TONES[i % 4] }))}
+                  onClick={() => (empty ? notify('📦 3학년 교과서가 나오면 채워질 거예요!') : onOpen(u.no))}
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.07, type: 'spring', stiffness: 260, damping: 22 }}
@@ -171,7 +170,14 @@ export default function UnitExplorer({ grades, grade, semester, onGrade, onSemes
         </AnimatePresence>
       </div>
 
-      <UnitModal unit={open?.unit} tone={open?.tone || 'butter'} grade={g.grade} semester={semester} onClose={() => setOpen(null)} notify={notify} />
+      <UnitModal
+        unit={g.ready && openIdx >= 0 ? units[openIdx] : null}
+        tone={UNIT_TONES[Math.max(openIdx, 0) % 4]}
+        grade={g.grade}
+        semester={semester}
+        onClose={() => onOpen(null)}
+        notify={notify}
+      />
     </section>
   );
 }

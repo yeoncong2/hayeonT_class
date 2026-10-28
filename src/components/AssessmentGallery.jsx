@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FileText, Heart, Image as ImageIcon, Link2, Paperclip, Pencil, Presentation, Table, Trophy, Upload } from 'lucide-react';
+import { ChevronRight, FileText, Heart, Image as ImageIcon, Link2, Paperclip, Pencil, Presentation, Table, Trophy, Upload } from 'lucide-react';
 import { TONE } from '../lib/colors';
 import { sendLike } from '../lib/useContent';
 import SectionTitle from './SectionTitle';
@@ -79,7 +79,69 @@ function Filter({ items, value, onChange, label, id }) {
   );
 }
 
-export default function AssessmentGallery({ items, grades }) {
+// 관련 단원 표시: 교과서 단원이 정해진 것은 눌러서 그 단원 창으로 바로 가요.
+const unitText = (ref) => ref.label || `${ref.semester}학기 ${ref.no}단원 · ${ref.lesson}`;
+
+// 올린 작품은 학년과 단원(=수행평가 이름)이 같은 수행평가 카드 안에 들어가요.
+const belongs = (w, t) => w.grade === t.grade && w.unit?.trim() === t.title;
+
+function FileLinks({ files }) {
+  if (!files?.length) return null;
+  return (
+    <div className="mt-2 flex flex-wrap gap-1.5">
+      {files.map((f) => {
+        const meta = FILE_TYPE[f.type] || FILE_TYPE.link;
+        const Icon = meta.icon;
+        return (
+          <a
+            key={f.id}
+            href={f.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-1 rounded-full border-2 border-ink px-2.5 py-0.5 font-jua text-xs shadow-pop-sm transition-transform hover:-translate-y-0.5 ${meta.tone}`}
+          >
+            <Icon size={12} strokeWidth={2.5} /> {f.label || meta.label}
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
+// 수행평가 카드 안의 작품 한 개
+function WorkRow({ w, likes, liked, onLike }) {
+  const k = KIND_LABEL[w.kind] || KIND_LABEL.result;
+  return (
+    <li className="rounded-xl border-2 border-ink bg-white p-2.5">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <span className={`chip ${k.tone}`}>{k.text}</span>
+          <p className="mt-1 font-bold leading-snug">
+            {w.emoji} {w.title}
+          </p>
+          {w.author && <p className="text-xs text-ink/70">{w.author}</p>}
+        </div>
+        <LikeButton count={likes} liked={liked} onClick={onLike} />
+      </div>
+      <FileLinks files={w.files} />
+    </li>
+  );
+}
+
+function EmptyWorks() {
+  return (
+    <div className="grid grid-cols-2 gap-2">
+      {['process', 'result'].map((k) => (
+        <div key={k} className="grid place-items-center gap-1 rounded-xl border-2 border-dashed border-ink/50 bg-white/70 px-2 py-3 text-center text-xs text-ink/70">
+          <span className="font-jua text-sm text-ink">{KIND_LABEL[k].text}</span>
+          작품이 곧 올라와요
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function AssessmentGallery({ tasks, items, grades, onUnit }) {
   const [kind, setKind] = useState('all');
   const [grade, setGrade] = useState(0);
   const [likes, setLikes] = useState({});
@@ -89,10 +151,10 @@ export default function AssessmentGallery({ items, grades }) {
     () => [{ value: 0, label: '모든 학년', tone: 'bg-butter' }, ...grades.map((g) => ({ value: g.grade, label: g.label, tone: TONE[g.color].bg }))],
     [grades]
   );
-  const list = useMemo(
-    () => items.filter((w) => (kind === 'all' || w.kind === kind) && (!grade || w.grade === grade)),
-    [items, kind, grade]
-  );
+  const works = useMemo(() => items.filter((w) => kind === 'all' || w.kind === kind), [items, kind]);
+  const list = useMemo(() => tasks.filter((t) => !grade || t.grade === grade), [tasks, grade]);
+  // 어느 수행평가에도 속하지 않는 작품(예전에 올린 것 등)은 아래에 따로 걸어요.
+  const others = useMemo(() => works.filter((w) => (!grade || w.grade === grade) && !tasks.some((t) => belongs(w, t))), [works, tasks, grade]);
 
   const like = (w) => {
     if (liked[w.id]) return;
@@ -100,6 +162,7 @@ export default function AssessmentGallery({ items, grades }) {
     setLiked((s) => ({ ...s, [w.id]: true }));
     sendLike(w.id);
   };
+  const row = (w) => <WorkRow key={w.id} w={w} likes={likes[w.id] ?? w.likes} liked={!!liked[w.id]} onLike={() => like(w)} />;
 
   return (
     <section id="assessment" className="scroll-mt-16 px-4 py-14 sm:py-20">
@@ -108,12 +171,12 @@ export default function AssessmentGallery({ items, grades }) {
           no={3}
           tag="수행평가 전시관"
           tone="bg-mint"
-          title="수행평가 과정물 & 결과물 🖼️"
-          desc="완성작만큼 그 과정도 소중해요. 생각을 키워 온 과정물과 멋진 결과물을 함께 걸어 두었어요."
+          title="학년별 수행평가 🖼️"
+          desc="학년마다 세 가지 수행평가를 해요. 관련 단원을 누르면 그 단원 자료로 바로 갈 수 있고, 친구들의 과정물과 결과물도 수행평가별로 걸려요."
         >
           <div className="mt-2 flex flex-wrap gap-3">
-            <Filter items={KINDS} value={kind} onChange={setKind} label="자료 종류" id="kindPill" />
             <Filter items={gradeItems} value={grade} onChange={setGrade} label="학년" id="galleryGradePill" />
+            <Filter items={KINDS} value={kind} onChange={setKind} label="자료 종류" id="kindPill" />
             <a
               href="#admin"
               className="inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-butter px-4 py-1.5 font-jua shadow-pop-sm transition-transform hover:-translate-y-0.5"
@@ -125,67 +188,70 @@ export default function AssessmentGallery({ items, grades }) {
 
         <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
-            {list.map((w, i) => {
-              const t = TONE[w.color] || TONE.sky;
-              const k = KIND_LABEL[w.kind];
+            {list.map((t, i) => {
+              const tone = TONE[t.color] || TONE.sky;
+              const g = grades.find((x) => x.grade === t.grade);
+              const order = tasks.filter((x) => x.grade === t.grade).indexOf(t) + 1;
+              const mine = works.filter((w) => belongs(w, t));
               return (
                 <motion.article
                   layout
-                  key={w.id}
+                  key={t.id}
                   initial={{ opacity: 0, y: 30, rotate: i % 2 ? 2 : -2 }}
                   animate={{ opacity: 1, y: 0, rotate: 0 }}
                   exit={{ opacity: 0, scale: 0.85 }}
                   transition={{ type: 'spring', stiffness: 260, damping: 24 }}
-                  className="card flex flex-col p-3 transition-transform duration-150 hover:-translate-y-1"
+                  className="card flex flex-col p-3"
                 >
-                  {/* 폴라로이드 사진 자리: 실제 이미지가 생기면 image 필드로 바꿔 넣어요 */}
-                  <div className={`dots relative grid aspect-[4/3] place-items-center overflow-hidden rounded-2xl border-2 border-ink ${t.bg}`}>
+                  <div className={`dots relative grid aspect-[16/9] place-items-center overflow-hidden rounded-2xl border-2 border-ink ${tone.bg}`}>
                     <span className="absolute left-1/2 top-1 h-5 w-16 -translate-x-1/2 -rotate-3 rounded-sm bg-white/70" aria-hidden />
-                    {w.image ? (
-                      <img src={w.image} alt={w.title} className="h-full w-full object-cover" />
-                    ) : (
-                      <motion.span className="text-7xl drop-shadow-[3px_3px_0_#3D3552]" whileHover={{ scale: 1.15, rotate: 8 }}>
-                        {w.emoji}
-                      </motion.span>
-                    )}
-                    <span className={`chip absolute bottom-2 left-2 ${k.tone}`}>{k.text}</span>
+                    <motion.span className="text-6xl drop-shadow-[3px_3px_0_#3D3552]" whileHover={{ scale: 1.15, rotate: 8 }}>
+                      {t.emoji}
+                    </motion.span>
+                    <span className={`chip absolute bottom-2 left-2 ${TONE[g?.color]?.bg || 'bg-white'}`}>
+                      {t.grade}학년 수행평가 {order}
+                    </span>
                   </div>
                   <div className="flex flex-1 flex-col px-2 pb-1 pt-4">
-                    <span className="text-xs font-bold text-ink/80">
-                      {w.grade}학년 {w.semester}학기 · {w.unit}
-                    </span>
-                    <h3 className="mt-1 text-xl leading-snug">{w.title}</h3>
-                    <p className="mt-1 text-sm text-ink/80">{w.desc}</p>
-                    {w.files?.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {w.files.map((f) => {
-                          const meta = FILE_TYPE[f.type] || FILE_TYPE.link;
-                          const Icon = meta.icon;
-                          return (
-                            <a
-                              key={f.id}
-                              href={f.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={`inline-flex items-center gap-1 rounded-full border-2 border-ink px-3 py-1 font-jua text-sm shadow-pop-sm transition-transform hover:-translate-y-0.5 ${meta.tone}`}
-                            >
-                              <Icon size={14} strokeWidth={2.5} /> {f.label || meta.label}
-                            </a>
-                          );
-                        })}
-                      </div>
-                    )}
-                    <div className="mt-auto flex items-center justify-between pt-4">
-                      <span className="font-jua text-base text-ink/80">{w.author}</span>
-                      <LikeButton count={likes[w.id] ?? w.likes} liked={!!liked[w.id]} onClick={() => like(w)} />
+                    <h3 className="text-xl leading-snug">{t.title}</h3>
+                    <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
+                      <span className="font-bold text-ink/80">관련 단원</span>
+                      {t.units.map((ref) =>
+                        ref.semester ? (
+                          <button key={unitText(ref)} onClick={() => onUnit(t.grade, ref)} className="chip bg-white transition-colors hover:bg-butter" title="이 단원 자료 열기">
+                            📖 {unitText(ref)} <ChevronRight size={12} strokeWidth={3} />
+                          </button>
+                        ) : (
+                          <span key={unitText(ref)} className="chip bg-cream">
+                            {unitText(ref)}
+                          </span>
+                        )
+                      )}
                     </div>
+                    <p className="mt-2 text-sm text-ink/80">{t.desc}</p>
+                    <div className="mt-auto pt-4">{mine.length ? <ul className="grid gap-2">{mine.map(row)}</ul> : <EmptyWorks />}</div>
                   </div>
                 </motion.article>
               );
             })}
           </AnimatePresence>
         </motion.div>
-        {list.length === 0 && <p className="card mt-2 border-dashed p-8 text-center font-jua text-xl text-ink/80">아직 올라온 작품이 없어요. 곧 채워질 거예요!</p>}
+
+        {others.length > 0 && (
+          <div className="mt-12">
+            <h3 className="mb-4 text-2xl">그 밖의 과정물 & 결과물</h3>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {others.map((w) => (
+                <div key={w.id}>
+                  <span className="mb-1 block text-xs font-bold text-ink/80">
+                    {w.grade}학년 {w.semester}학기 · {w.unit}
+                  </span>
+                  <ul>{row(w)}</ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
