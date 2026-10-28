@@ -76,7 +76,7 @@ function Site() {
           onOpen={setOpenNo}
           notify={notify}
         />
-        <AssessmentGallery tasks={content.tasks} items={content.assessments} grades={content.grades} onUnit={showUnit} />
+        <AssessmentGallery tasks={content.tasks} grades={content.grades} onUnit={showUnit} />
       </main>
       <Footer title={content.site.title} questions={content.questions} live={live} />
       <Toast message={toast} />
