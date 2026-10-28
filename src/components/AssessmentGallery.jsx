@@ -67,14 +67,22 @@ function ResultSlot({ url }) {
   );
 }
 
+const SEMESTERS = [
+  { value: 1, label: '1학기', tone: 'bg-peach' },
+  { value: 2, label: '2학기', tone: 'bg-sky' },
+];
+
 export default function AssessmentGallery({ tasks, grades, onUnit }) {
   const [grade, setGrade] = useState(0);
+  const [semester, setSemester] = useState(2);
 
   const gradeItems = useMemo(
     () => [{ value: 0, label: '모든 학년', tone: 'bg-butter' }, ...grades.map((g) => ({ value: g.grade, label: g.label, tone: TONE[g.color].bg }))],
     [grades]
   );
-  const list = useMemo(() => tasks.filter((t) => !grade || t.grade === grade), [tasks, grade]);
+  // semester 가 없는 예전 항목은 2학기로 봐요.
+  const semOf = (t) => t.semester || 2;
+  const list = useMemo(() => tasks.filter((t) => semOf(t) === semester && (!grade || t.grade === grade)), [tasks, grade, semester]);
 
   return (
     <section id="assessment" className="scroll-mt-16 px-4 py-14 sm:py-20">
@@ -84,19 +92,33 @@ export default function AssessmentGallery({ tasks, grades, onUnit }) {
           tag="수행평가 전시관"
           tone="bg-mint"
           title="학년별 수행평가 🖼️"
-          desc="학년마다 세 가지 수행평가를 해요. 관련 단원을 누르면 그 단원 자료로 바로 갈 수 있고, 결과물 칸을 누르면 결과물을 올리고 친구들 작품도 볼 수 있는 곳이 열려요."
+          desc="학기와 학년을 골라 수행평가를 살펴봐요. 관련 단원을 누르면 그 단원 자료로 바로 갈 수 있고, 결과물 칸을 누르면 결과물을 올리고 친구들 작품도 볼 수 있는 곳이 열려요."
         >
           <div className="mt-2 flex flex-wrap gap-3">
+            <Filter items={SEMESTERS} value={semester} onChange={setSemester} label="학기" id="gallerySemesterPill" />
             <Filter items={gradeItems} value={grade} onChange={setGrade} label="학년" id="galleryGradePill" />
           </div>
         </SectionTitle>
+
+        {list.length === 0 && (
+          <motion.div
+            key={`empty-${semester}-${grade}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="card mx-auto flex max-w-md flex-col items-center gap-2 px-6 py-10 text-center"
+          >
+            <span className="text-5xl" aria-hidden>🌱</span>
+            <p className="font-jua text-xl">{semester}학기 수행평가는 곧 채워져요</p>
+            <p className="text-sm text-ink/70">조금만 기다려 주세요!</p>
+          </motion.div>
+        )}
 
         <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {list.map((t, i) => {
               const tone = TONE[t.color] || TONE.sky;
               const g = grades.find((x) => x.grade === t.grade);
-              const order = tasks.filter((x) => x.grade === t.grade).indexOf(t) + 1;
+              const order = tasks.filter((x) => x.grade === t.grade && semOf(x) === semOf(t)).indexOf(t) + 1;
               return (
                 <motion.article
                   layout
@@ -113,7 +135,7 @@ export default function AssessmentGallery({ tasks, grades, onUnit }) {
                       {t.emoji}
                     </motion.span>
                     <span className={`chip absolute bottom-2 left-2 ${TONE[g?.color]?.bg || 'bg-white'}`}>
-                      {t.grade}학년 수행평가 {order}
+                      {t.grade}학년 {semOf(t)}학기 수행평가 {order}
                     </span>
                   </div>
                   <div className="flex flex-1 flex-col px-2 pb-1 pt-4">

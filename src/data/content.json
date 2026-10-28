@@ -411,6 +411,7 @@
     {
       "id": "g1-energy",
       "grade": 1,
+      "semester": 2,
       "emoji": "⚡",
       "color": "pink",
       "title": "에너지 카드 뉴스 만들기",
@@ -427,6 +428,7 @@
     {
       "id": "g1-argue",
       "grade": 1,
+      "semester": 2,
       "emoji": "🗣️",
       "color": "butter",
       "title": "주장하는 글쓰기",
@@ -448,6 +450,7 @@
     {
       "id": "g1-reading",
       "grade": 1,
+      "semester": 2,
       "emoji": "📚",
       "color": "sky",
       "title": "독서 성장 포트폴리오",
@@ -462,9 +465,10 @@
     {
       "id": "g2-hunmin",
       "grade": 2,
+      "semester": 2,
       "emoji": "📜",
       "color": "mint",
-      "title": "훈민정음 네 컷 만화 그리기",
+      "title": "훈민정음 창제 정신 네 컷 만화 그리기",
       "units": [
         {
           "semester": 2,
@@ -472,12 +476,13 @@
           "lesson": "국어의 문자 체계"
         }
       ],
-      "desc": "훈민정음의 창제 원리와 특징을 네 컷 만화로 재미있게 풀어내요.",
-      "url": ""
+      "desc": "훈민정음에 담긴 창제 정신과 원리를 네 컷 만화로 재미있게 풀어내요.",
+      "url": "https://quizn.show/pbd/info/board/1199859"
     },
     {
       "id": "g2-news",
       "grade": 2,
+      "semester": 2,
       "emoji": "📺",
       "color": "peach",
       "title": "추억을 뉴스하다",
@@ -494,6 +499,7 @@
     {
       "id": "g2-reading",
       "grade": 2,
+      "semester": 2,
       "emoji": "📚",
       "color": "sky",
       "title": "독서 성장 포트폴리오",
@@ -508,6 +514,7 @@
     {
       "id": "g3-era",
       "grade": 3,
+      "semester": 2,
       "emoji": "🫏",
       "color": "lilac",
       "title": "시대 뉴스 만들기",
@@ -522,6 +529,7 @@
     {
       "id": "g3-argue",
       "grade": 3,
+      "semester": 2,
       "emoji": "🗣️",
       "color": "butter",
       "title": "주장하는 글쓰기",
@@ -536,6 +544,7 @@
     {
       "id": "g3-reading",
       "grade": 3,
+      "semester": 2,
       "emoji": "📚",
       "color": "sky",
       "title": "독서 성장 포트폴리오",
