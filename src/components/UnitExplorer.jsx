@@ -7,7 +7,13 @@ import Modal from './Modal';
 function LinkButton({ href, icon: Icon, label, className, onMissing }) {
   if (href) {
     return (
-      <a href={href} target="_blank" rel="noreferrer" className={`btn px-3 py-1.5 text-sm ${className}`}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        // 한글(HWP) 파일은 브라우저에서 열 수 없어서 바로 내려받게 해요.
+        download={/\.hwpx?$/i.test(href) ? href.split('/').pop() : undefined}
+        className={`btn px-3 py-1.5 text-sm ${className}`}>
         <Icon size={16} strokeWidth={2.5} /> {label}
       </a>
     );
