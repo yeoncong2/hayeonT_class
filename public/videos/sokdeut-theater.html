@@ -123,11 +123,11 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-of
     <button id="bRe" type="button">처음부터</button>
     <div class="seekbox"><input type="range" id="seek" min="0" max="1000" value="0" aria-label="재생 위치"><span class="time" id="time">0:00 / 0:00</span></div>
     <label class="pace" for="pace">글자 속도<select id="pace"><option value="1.35">느리게</option><option value="1" selected>보통</option><option value="0.75">빠르게</option></select></label>
-    <button id="bSnd" type="button" aria-pressed="true">효과음 켬</button>
+    <button id="bSnd" type="button" aria-pressed="true">🔊 소리 켬</button>
     <button id="bFull" type="button">전체 화면</button>
   </div>
   <ol class="chap" id="chap" aria-label="장면 바로 가기"></ol>
-  <p class="tip">글자가 너무 빠르거나 느리면 ‘글자 속도’를 바꿔 보세요. 스페이스바: 재생/일시정지 · ←/→: 이전/다음 장면 · 장면 이름을 누르면 그 장면으로 이동해요. 효과음은 재생 버튼을 누른 뒤부터 나와요.</p>
+  <p class="tip">글자가 너무 빠르거나 느리면 ‘글자 속도’를 바꿔 보세요. 스페이스바: 재생/일시정지 · ←/→: 이전/다음 장면 · 장면 이름을 누르면 그 장면으로 이동해요. 소리(배경 음악·효과음)는 재생 버튼을 누르면 함께 나와요. 소리가 안 들리면 기기 음량과 ‘소리 켬’ 버튼을 확인해 주세요.</p>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -137,17 +137,52 @@ const W = 1920, H = 1080, R = gsap.utils.random;
 const frame = $('#frame'), stage = $('#stage'), cam = $('#cam');
 let snd = true, AC = null, playing = false;
 
-/* ---------- 효과음 (WebAudio, 재생 중일 때만) ---------- */
+/* ---------- 소리 (WebAudio, 재생 중일 때만) ---------- */
+let OUT = null;
+function audio(){
+  // 아이폰 무음 모드에서도 들리도록 (Safari 16.4+)
+  try{ if (navigator.audioSession) navigator.audioSession.type = 'playback'; }catch(e){}
+  if (!AC){ AC = new (window.AudioContext || window.webkitAudioContext)(); OUT = AC.createGain(); OUT.gain.value = 1; OUT.connect(AC.destination); }
+  if (AC.state !== 'running') AC.resume();
+  return AC;
+}
+/* 영상 내내 깔리는 잔잔한 배경 음악 */
+const BGM_MEL = [523,0,659,0,784,659,587,0,494,0,587,0,698,587,523,0];
+const BGM_BAS = [131,131,110,110,147,147,98,98];
+const BGM_STEP = .26;
+let bgmTimer = null, bgmNext = 0, bgmI = 0;
+function tone(f,t,type,v,d){
+  if(!f) return;
+  const o=AC.createOscillator(), g=AC.createGain();
+  o.type=type; o.frequency.value=f; g.gain.setValueAtTime(v,t); g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.connect(g); g.connect(OUT); o.start(t); o.stop(t+d+.02);
+}
+function bgmStart(){
+  if (bgmTimer || !snd) return;
+  try{ audio(); }catch(e){ return; }
+  bgmNext = AC.currentTime + .05;
+  bgmTimer = setInterval(()=>{
+    if (AC.state !== 'running') return;
+    if (bgmNext < AC.currentTime) bgmNext = AC.currentTime + .05;
+    while (bgmNext < AC.currentTime + .3){
+      tone(BGM_MEL[bgmI % BGM_MEL.length], bgmNext, 'triangle', .05, BGM_STEP*1.6);
+      if (bgmI % 2 === 0) tone(BGM_BAS[(bgmI/2) % BGM_BAS.length], bgmNext, 'sine', .12, BGM_STEP*1.9);
+      bgmNext += BGM_STEP; bgmI++;
+    }
+  }, 80);
+}
+function bgmStop(){ clearInterval(bgmTimer); bgmTimer = null; }
+
 const SFX = {pop:[520,1040,.09,'sine'],tick:[1300,1300,.05,'square'],boom:[160,38,.45,'sawtooth'],ding:[880,1760,.4,'triangle'],
   buzz:[200,120,.35,'square'],whoosh:[250,1400,.22,'sine'],type:[1700,1700,.02,'square'],drop:[700,200,.25,'triangle'],laugh:[420,620,.12,'triangle']};
 function sfx(k){
   if (!snd || !playing) return;
   try{
-    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    audio();
     const P = SFX[k], t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain();
     o.type = P[3]; o.frequency.setValueAtTime(P[0], t); o.frequency.exponentialRampToValueAtTime(P[1], t + P[2]);
-    g.gain.setValueAtTime(k === 'type' ? .05 : .16, t); g.gain.exponentialRampToValueAtTime(.0008, t + P[2] + .05);
-    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + P[2] + .08);
+    g.gain.setValueAtTime(k === 'type' ? .08 : .25, t); g.gain.exponentialRampToValueAtTime(.0008, t + P[2] + .05);
+    o.connect(g); g.connect(OUT); o.start(t); o.stop(t + P[2] + .08);
   }catch(e){}
 }
 
@@ -489,12 +524,13 @@ function upd(){
 }
 function ui(){
   bPlay.textContent = playing ? '일시정지' : (TL.progress()>=.999 ? '다시 보기' : '재생');
-  bSnd.textContent = snd ? '효과음 켬' : '효과음 끔'; bSnd.setAttribute('aria-pressed',String(snd));
+  bSnd.textContent = snd ? '🔊 소리 켬' : '🔇 소리 끔';
+  (playing && snd) ? bgmStart() : bgmStop(); bSnd.setAttribute('aria-pressed',String(snd));
 }
 function play(){
   if(TL.progress()>=.999) TL.progress(0);
   poster.hidden=true; playing=true;
-  try{ AC = AC || new (window.AudioContext||window.webkitAudioContext)(); AC.resume && AC.resume(); }catch(e){}
+  try{ audio(); }catch(e){}
   TL.play(); ui();
 }
 function pause(){ playing=false; TL.pause(); ui(); }
