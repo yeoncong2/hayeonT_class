@@ -211,7 +211,7 @@
 
 </div>
 <div id="bar"><div id="fill"></div></div>
-<audio id="snd" preload="auto" src="nonjeung-motivation.mp3?v=3"></audio>
+<audio id="snd" preload="auto" src="nonjeung-motivation.mp3?v=4"></audio>
 <div id="sndwarn" style="display:none;margin-top:10px;color:#FFD166;font-size:15px;font-weight:700;text-align:center;max-width:94vw"></div>
 <div id="controls">
   <button id="play">▶ 재생</button>
@@ -442,28 +442,44 @@ let t=0, playing=false, last=null, pausedAt=new Set();
 const fill=document.getElementById("fill"), timeEl=document.getElementById("time"), playBtn=document.getElementById("play");
 const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
 function update(){ render(t); fill.style.width=(t/DURATION*100)+"%"; timeEl.textContent=`${fmt(t)} / ${fmt(DURATION)}`; playBtn.textContent=playing?"❚❚ 일시정지":"▶ 재생"; }
-const snd=document.getElementById("snd"), muteBtn=document.getElementById("mute");
-function sndPlay(){ snd.muted=false; muteBtn.textContent="🔊 소리 켜짐"; try{ snd.currentTime=t; }catch(e){} const p=snd.play(); if(p&&p.catch) p.catch(err=>{ warn("소리를 재생하지 못했어요. 화면을 한 번 누른 뒤 ▶ 재생을 다시 눌러 주세요. ("+(err&&err.name||"오류")+")"); }); }
-function warn(msg){ const w=document.getElementById("sndwarn"); w.textContent=msg; w.style.display="block"; }
-snd.addEventListener("error",()=>warn("소리 파일을 불러오지 못했어요. 새로고침(Ctrl+F5) 후 다시 시도해 주세요."));
-snd.addEventListener("playing",()=>{ document.getElementById("sndwarn").style.display="none"; });
-function sndPause(){ try{ snd.pause(); }catch(e){} }
-function sndSeek(){ try{ snd.currentTime=t; }catch(e){} }
+const snd=document.getElementById("snd"), muteBtn=document.getElementById("mute"), warnEl=document.getElementById("sndwarn");
+// 소리를 기준 시계로 씁니다. 소리가 준비되지 않으면 화면이 잠시 기다리고, 끝내 안 되면 소리 없이 진행합니다.
+let audioOK=true, audioRunning=false, pendingSeek=null, waitSince=null;
+function warn(msg){ warnEl.textContent=msg; warnEl.style.display=msg?"block":"none"; }
+function seekAudio(x){ if(snd.readyState>=1){ try{ snd.currentTime=x; pendingSeek=null; return; }catch(e){} } pendingSeek=x; }
+snd.addEventListener("loadedmetadata",()=>{ if(pendingSeek!=null){ try{ snd.currentTime=pendingSeek; }catch(e){} pendingSeek=null; } });
+snd.addEventListener("playing",()=>{ audioRunning=true; waitSince=null; warn(""); });
+snd.addEventListener("waiting",()=>{ audioRunning=false; if(playing&&audioOK){ waitSince=waitSince||performance.now(); warn("소리를 불러오는 중이에요…"); } });
+snd.addEventListener("pause",()=>{ audioRunning=false; });
+snd.addEventListener("error",()=>{ audioOK=false; audioRunning=false; warn("소리 파일을 불러오지 못해 소리 없이 재생합니다. 새로고침 후 다시 시도해 보세요."); });
+function sndPlay(){
+  if(!audioOK) return;
+  snd.muted=false; muteBtn.textContent="🔊 소리 켜짐";
+  seekAudio(t); waitSince=performance.now();
+  const p=snd.play();
+  if(p&&p.catch) p.catch(err=>{ if(err&&err.name==="AbortError") return; audioOK=false; warn("소리 재생이 막혀 소리 없이 재생합니다. 일시정지 후 ▶ 재생을 다시 눌러 보세요. ("+(err&&err.name||"오류")+")"); });
+}
+function sndPause(){ try{ snd.pause(); }catch(e){} waitSince=null; }
+function sndSeek(){ seekAudio(t); }
 function loop(ts){
   if(!playing){last=null;return;}
   if(last!=null){
-    const nt=t+(ts-last)/1000;
+    let nt;
+    if(audioOK && audioRunning){ nt=Math.max(t, snd.currentTime); }        // 소리를 따라감
+    else if(audioOK && waitSince!=null && performance.now()-waitSince<8000){ nt=t; } // 소리 준비 대기
+    else { if(audioOK && waitSince!=null){ warn("소리가 늦게 불러와져서 화면을 먼저 재생합니다. 잠시 뒤 소리가 이어질 수 있어요."); waitSince=null; } nt=t+(ts-last)/1000; }
     const stop=PAUSE_POINTS.find(p=>t<p&&nt>=p&&!pausedAt.has(p));
     if(stop!==undefined){ t=stop; pausedAt.add(stop); playing=false; sndPause(); update(); return; }
     t=Math.min(DURATION,nt);
     if(t>=DURATION){ playing=false; sndPause(); }
-    else if(!snd.paused && Math.abs(snd.currentTime-t)>0.25){ try{ snd.currentTime=t; }catch(e){} }
   }
   last=ts; update(); requestAnimationFrame(loop);
 }
-playBtn.onclick=()=>{ if(t>=DURATION){t=0;pausedAt.clear();} playing=!playing; if(playing){ sndPlay(); requestAnimationFrame(loop); } else { sndPause(); update(); } };
-document.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>{ t=parseFloat(b.dataset.jump); pausedAt=new Set(PAUSE_POINTS.filter(p=>p<=t)); sndSeek(); update(); });
-document.getElementById("bar").onclick=e=>{ const r=e.currentTarget.getBoundingClientRect(); t=clamp((e.clientX-r.left)/r.width)*DURATION; pausedAt=new Set(PAUSE_POINTS.filter(p=>p<=t)); sndSeek(); update(); };
+function resetAudio(){ if(!audioOK){ audioOK=true; try{ snd.load(); }catch(e){} } }
+playBtn.onclick=()=>{ if(t>=DURATION){t=0;pausedAt.clear();} playing=!playing; if(playing){ resetAudio(); sndPlay(); requestAnimationFrame(loop); } else { sndPause(); update(); } };
+function jumpTo(x){ t=x; pausedAt=new Set(PAUSE_POINTS.filter(p=>p<=t)); sndSeek(); update(); }
+document.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>jumpTo(parseFloat(b.dataset.jump)));
+document.getElementById("bar").onclick=e=>{ const r=e.currentTarget.getBoundingClientRect(); jumpTo(clamp((e.clientX-r.left)/r.width)*DURATION); };
 muteBtn.onclick=()=>{ snd.muted=!snd.muted; muteBtn.textContent=snd.muted?"🔇 소리 꺼짐":"🔊 소리 켜짐"; };
 document.addEventListener("keydown",e=>{ if(e.code==="Space"){ e.preventDefault(); playBtn.click(); } });
 update();
