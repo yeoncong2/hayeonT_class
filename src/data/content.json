@@ -350,7 +350,7 @@
       "emoji": "🐔",
       "color": "lilac",
       "tagline": "새 교과서가 오면 여기에 차곡차곡 채워요",
-      "ready": false,
+      "ready": true,
       "semesters": {
         "1": [
           {
@@ -399,9 +399,22 @@
           },
           {
             "no": 4,
-            "title": "",
-            "emoji": "📦",
-            "lessons": []
+            "title": "논리로 여는 세상",
+            "emoji": "🧩",
+            "lessons": [
+              {
+                "title": "논리적으로 읽기",
+                "area": "읽기",
+                "textbook": "videos/nonjeung-motivation.html",
+                "worksheet": ""
+              },
+              {
+                "title": "주장하는 글 쓰기",
+                "area": "쓰기",
+                "textbook": "",
+                "worksheet": ""
+              }
+            ]
           }
         ]
       }

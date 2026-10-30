@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이 말, 믿어도 될까? — 논증 동기유발 영상</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFF8EC; --ink:#23395B; --soft:#5C6B82; --orange:#F28C28; --teal:#2A9D8F;
+    --red:#E63946; --yellow:#FFD166; --blue:#4D8FD6; --card:#FFFFFF; --line:#E8DCC6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#1d2533;font-family:"Noto Sans CJK KR","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif;color:var(--ink);overflow:hidden}
+  #wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}
+  #stage{position:relative;width:1280px;height:720px;background:var(--bg);overflow:hidden;transform-origin:center center;border-radius:6px}
+  .abs{position:absolute}
+  [data-in]{opacity:0}
+  .center{left:0;right:0;text-align:center}
+  .title{font-size:84px;font-weight:900;letter-spacing:-2px}
+  .sub{font-size:28px;font-weight:700;color:var(--soft)}
+  .chip{display:inline-block;padding:10px 26px;border-radius:999px;background:var(--ink);color:#fff;font-size:28px;font-weight:800}
+  .caption{left:80px;right:80px;bottom:44px;text-align:center;font-size:36px;font-weight:800;background:rgba(35,57,91,.92);color:#fff;padding:18px 28px;border-radius:18px;line-height:1.35}
+  .caption b{color:var(--yellow)}
+  .bubble{background:#fff;border:4px solid var(--ink);border-radius:26px;padding:20px 26px;font-size:29px;font-weight:700;line-height:1.45;box-shadow:0 6px 0 rgba(35,57,91,.15)}
+  .bubble.left:after,.bubble.right:after{content:"";position:absolute;bottom:-26px;width:0;height:0;border:14px solid transparent;border-top:14px solid var(--ink)}
+  .bubble.left:after{left:60px}
+  .bubble.right:after{right:60px}
+  .name{font-size:26px;font-weight:900;text-align:center}
+  .phone{width:310px;height:540px;border-radius:44px;background:#1f2937;padding:16px}
+  .screen{width:100%;height:100%;border-radius:32px;background:linear-gradient(160deg,#FFEDD5,#FDE68A);position:relative;overflow:hidden}
+  .ad{left:22px;right:22px;font-weight:900;text-align:center;color:#7C2D12}
+  .stamp{border:5px solid var(--red);color:var(--red);font-weight:900;border-radius:14px;padding:6px 14px;transform:rotate(-8deg);font-size:26px;white-space:nowrap;background:rgba(255,255,255,.85)}
+  .roof{width:440px;height:96px;border-radius:16px;background:var(--ink);color:#fff;font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.25}
+  .pillar{width:180px;height:230px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;font-weight:800;padding:14px;line-height:1.35;color:#fff}
+  .ground{height:16px;border-radius:8px;background:#B9A88A}
+  .tag{font-size:22px;font-weight:800;padding:6px 14px;border-radius:10px;display:inline-block}
+  .defbox{border-radius:22px;font-size:48px;font-weight:900;color:#fff;display:flex;align-items:center;justify-content:center}
+  .card{background:#fff;border:4px solid var(--ink);border-radius:26px;width:520px;height:400px;padding:26px}
+  .card h3{font-size:36px;font-weight:900;margin-bottom:10px}
+  .card p{font-size:25px;font-weight:700;color:var(--soft);line-height:1.5}
+  .pause{display:inline-flex;gap:10px;vertical-align:middle;margin-right:14px}
+  .pause i{display:block;width:14px;height:40px;background:var(--yellow);border-radius:4px}
+  /* controls */
+  #controls{margin-top:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:1280px;padding:0 10px}
+  #controls button{font:inherit;font-size:15px;font-weight:700;border:0;border-radius:999px;padding:8px 14px;background:#334155;color:#fff;cursor:pointer}
+  #controls button.on{background:var(--orange)}
+  #bar{width:min(1280px,94vw);height:8px;background:#334155;border-radius:4px;margin-top:10px;cursor:pointer;position:relative}
+  #fill{position:absolute;left:0;top:0;bottom:0;background:var(--orange);border-radius:4px;width:0}
+  #time{color:#cbd5e1;font-size:14px;margin-left:6px;min-width:90px}
+  body.render #controls, body.render #bar{display:none}
+  body.render #stage{border-radius:0}
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage">
+
+  <!-- ===== S1 제목 (0-7) ===== -->
+  <div data-in="0" data-out="7">
+    <div class="abs center" style="top:150px" data-in="0.3" data-anim="pop"><span class="chip">논리로 여는 세상</span></div>
+    <div class="abs center title" style="top:250px" data-in="0.8" data-anim="up">이 말, 믿어도 될까?</div>
+    <div class="abs center sub" style="top:380px" data-in="2" data-anim="fade">우리는 하루에도 수십 번 누군가의 '주장'을 듣는다</div>
+    <div class="abs" style="left:170px;top:470px;font-size:120px;font-weight:900;color:var(--orange)" data-in="2.6" data-anim="pop" data-wobble="1">?</div>
+    <div class="abs" style="right:180px;top:440px;font-size:90px;font-weight:900;color:var(--teal)" data-in="3" data-anim="pop" data-wobble="1">?</div>
+    <div class="abs" style="left:560px;top:500px;font-size:70px;font-weight:900;color:var(--blue)" data-in="3.4" data-anim="pop" data-wobble="1">?</div>
+  </div>
+
+  <!-- ===== S2 광고 (7-24) ===== -->
+  <div data-in="7" data-out="24">
+    <div class="abs" style="left:150px;top:30px" data-in="7.2" data-anim="up">
+      <div class="phone"><div class="screen">
+        <div class="abs ad" style="top:30px;font-size:22px;color:#9A3412">광고</div>
+        <div class="abs" style="left:100px;top:62px;width:90px;height:150px" data-in="8" data-anim="pop">
+          <svg width="90" height="150" viewBox="0 0 90 150"><rect x="30" y="0" width="30" height="20" rx="4" fill="#16A34A"/><path d="M22 20h46l8 30v90a10 10 0 0 1-10 10H24a10 10 0 0 1-10-10V50z" fill="#4ADE80" stroke="#166534" stroke-width="4"/><rect x="16" y="70" width="58" height="40" rx="6" fill="#fff"/><text x="45" y="97" font-size="16" font-weight="900" text-anchor="middle" fill="#166534" font-family="Noto Sans CJK KR, sans-serif">쑥쑥</text></svg>
+        </div>
+        <div class="abs ad" style="top:222px;font-size:34px" data-in="8.6" data-anim="pop">쑥쑥 주스</div>
+        <div class="abs ad" style="top:278px;font-size:25px;line-height:1.4" data-in="9.6" data-anim="up">하루 한 병이면<br>키가 쑥쑥 자라요!</div>
+        <div class="abs ad" style="top:368px;font-size:23px" data-in="11" data-anim="up">유명 연예인도 마신대요!</div>
+        <div class="abs" style="left:46px;top:416px" data-in="12.2" data-anim="pop"><div class="stamp">오늘만 50% 할인</div></div>
+      </div></div>
+    </div>
+    <div class="abs" style="left:640px;top:70px;width:520px" data-in="13.4" data-anim="pop">
+      <div class="bubble left" style="position:relative">진짜? 연예인도 마신다니까<br>나도 하나 사 볼까?</div>
+    </div>
+    <div class="abs" data-person="viewer" style="left:700px;top:230px;width:230px;height:330px" data-in="13" data-anim="up"></div>
+    <div class="abs" style="left:950px;top:250px;width:300px" data-in="15" data-anim="pop">
+      <div class="tag" style="background:#FEE2E2;color:var(--red)">이유 ①</div>
+      <div style="font-size:24px;font-weight:800;margin:6px 0 14px">"키가 쑥쑥"<br>누가 확인했지?</div>
+      <div class="tag" style="background:#FEE2E2;color:var(--red)" >이유 ②</div>
+      <div style="font-size:24px;font-weight:800;margin-top:6px">연예인이 마시면<br>나도 큰다?</div>
+    </div>
+    <div class="abs caption" data-in="17.5" data-anim="up">광고는 "사라"고 <b>주장</b>한다. 그런데 그 <b>이유</b>는 믿을 만할까?</div>
+  </div>
+
+  <!-- ===== S3 설득 대결 (24-58) ===== -->
+  <div data-in="24" data-out="58">
+    <div class="abs center" style="top:26px" data-in="24.2" data-anim="pop"><span class="chip" style="background:var(--orange)">설득 대결 · 주말 게임 시간 1시간 더!</span></div>
+    <div class="abs" data-person="minjun" style="left:60px;top:300px;width:230px;height:330px" data-in="24.6" data-anim="left"></div>
+    <div class="abs name" style="left:60px;width:230px;top:640px" data-in="24.6" data-anim="fade">민준</div>
+    <div class="abs" data-person="mom" style="left:525px;top:290px;width:230px;height:340px" data-in="25" data-anim="up"></div>
+    <div class="abs name" style="left:525px;width:230px;top:640px" data-in="25" data-anim="fade">엄마</div>
+    <div class="abs" data-person="seoyeon" style="left:990px;top:300px;width:230px;height:330px" data-in="25.4" data-anim="right"></div>
+    <div class="abs name" style="left:990px;width:230px;top:640px" data-in="25.4" data-anim="fade">서연</div>
+    <div class="abs caption" style="bottom:auto;top:110px;font-size:30px" data-in="25.8" data-out="28.6" data-anim="fade">민준이와 서연이가 각자 엄마를 설득하려고 한다</div>
+
+    <div class="abs" style="left:40px;top:96px;width:620px" data-in="28.8" data-out="40.2" data-anim="pop">
+      <div class="bubble left" style="position:relative"><span data-type="1" data-in="29" data-text="엄마, 우리 반 애들 다 주말에 게임 2시간씩 해요! 저만 안 하면 뒤처진단 말이에요!"></span></div>
+    </div>
+    <div class="abs" style="left:610px;top:236px;font-size:34px;font-weight:900;color:var(--soft)" data-in="35" data-out="40.2" data-anim="pop">흠…</div>
+
+    <div class="abs" style="left:620px;top:96px;width:640px" data-in="40.4" data-out="52" data-anim="pop">
+      <div class="bubble right" style="position:relative"><span data-type="1" data-in="40.6" data-text="지난 2주 동안 숙제를 한 번도 미루지 않았어요. 숙제를 다 끝낸 날에만 1시간 더 하게 해 주세요. 약속을 못 지키면 다시 줄일게요."></span></div>
+    </div>
+    <div class="abs" style="left:680px;top:262px;font-size:34px;font-weight:900;color:var(--teal)" data-in="48.4" data-out="52" data-anim="pop">오호?</div>
+
+    <div class="abs" style="left:0;right:0;top:0;bottom:0;background:rgba(29,37,51,.55)" data-in="52.2" data-anim="fade"></div>
+    <div class="abs caption" style="bottom:auto;top:230px;font-size:46px;padding:34px" data-in="52.4" data-anim="pop">
+      <div>여러분이 엄마라면,</div><div><b>누구의 말</b>에 마음이 움직일까?</div>
+      <div style="font-size:28px;margin-top:18px;color:#E2E8F0"><span class="pause"><i></i><i></i></span>잠깐 멈추고 짝과 이야기해 보자</div>
+    </div>
+  </div>
+
+  <!-- ===== S4 분석 (58-80) ===== -->
+  <div data-in="58" data-out="80">
+    <div class="abs center" style="top:26px" data-in="58.2" data-anim="pop"><span class="chip">두 사람의 말, 무엇이 달랐을까?</span></div>
+    <!-- 민준 -->
+    <div class="abs name" style="left:90px;width:480px;top:110px;color:var(--blue)" data-in="58.6" data-anim="fade">민준의 말</div>
+    <div class="abs" style="left:110px;top:160px" data-in="59" data-anim="down" data-tilt="66.2" data-tilt-deg="-14" data-tilt-x="-10" data-tilt-y="130">
+      <div class="roof">주장<br>게임 시간 1시간 더!</div>
+    </div>
+    <div class="abs" style="left:135px;top:262px" data-in="60" data-anim="up" data-fall="65" data-fall-dir="-1">
+      <div class="pillar" style="background:#94A3B8">우리 반 애들<br>다 한다</div>
+    </div>
+    <div class="abs" style="left:345px;top:262px" data-in="60.6" data-anim="up" data-fall="65.4" data-fall-dir="1">
+      <div class="pillar" style="background:#94A3B8">안 하면<br>뒤처진다</div>
+    </div>
+    <div class="abs" style="left:150px;top:300px;font-size:24px;font-weight:900;color:var(--red)" data-in="62" data-out="65" data-anim="pop">정말 다?</div>
+    <div class="abs" style="left:380px;top:300px;font-size:24px;font-weight:900;color:var(--red)" data-in="63" data-out="65.4" data-anim="pop">왜?</div>
+    <div class="abs ground" style="left:100px;top:496px;width:460px" data-in="58.6" data-anim="fade"></div>
+    <div class="abs" style="left:100px;top:520px;width:460px;text-align:center;font-size:25px;font-weight:800;color:var(--red)" data-in="67" data-anim="up">확인할 수 없는 근거 → 주장이 무너진다</div>
+
+    <!-- 서연 -->
+    <div class="abs name" style="left:710px;width:480px;top:110px;color:var(--teal)" data-in="58.6" data-anim="fade">서연의 말</div>
+    <div class="abs" style="left:730px;top:160px" data-in="59.2" data-anim="down" data-glow="69">
+      <div class="roof" style="background:var(--teal)">주장<br>게임 시간 1시간 더!</div>
+    </div>
+    <div class="abs" style="left:755px;top:262px" data-in="60.4" data-anim="up">
+      <div class="pillar" style="background:#2F6F8F">2주 동안<br>숙제를<br>미루지 않음</div>
+    </div>
+    <div class="abs" style="left:965px;top:262px" data-in="61" data-anim="up">
+      <div class="pillar" style="background:#2F6F8F">조건과 약속<br>(숙제 끝낸 날,<br>어기면 줄이기)</div>
+    </div>
+    <div class="abs" style="left:770px;top:226px;font-size:22px;font-weight:900;color:var(--teal)" data-in="68" data-anim="pop">✔ 확인 가능</div>
+    <div class="abs" style="left:990px;top:226px;font-size:22px;font-weight:900;color:var(--teal)" data-in="68.4" data-anim="pop">✔ 합리적</div>
+    <div class="abs ground" style="left:720px;top:496px;width:460px" data-in="58.6" data-anim="fade"></div>
+    <div class="abs" style="left:720px;top:520px;width:460px;text-align:center;font-size:25px;font-weight:800;color:var(--teal)" data-in="69" data-anim="up">믿을 만한 근거 → 주장이 버틴다</div>
+
+    <div class="abs caption" data-in="72" data-anim="up">주장은 같았다. 차이는 그 주장을 받치는 <b>근거</b>에 있었다!</div>
+  </div>
+
+  <!-- ===== S5 정의 (80-93) ===== -->
+  <div data-in="80" data-out="93">
+    <div class="abs defbox" style="left:120px;top:150px;width:300px;height:150px;background:var(--orange)" data-in="80.4" data-anim="left">근거</div>
+    <div class="abs defbox" style="left:860px;top:150px;width:300px;height:150px;background:var(--ink)" data-in="80.8" data-anim="right">주장</div>
+    <div class="abs" style="left:440px;top:196px;width:400px;height:60px" data-in="81.6" data-anim="grow">
+      <svg width="400" height="60" viewBox="0 0 400 60"><line x1="10" y1="30" x2="360" y2="30" stroke="#23395B" stroke-width="10" stroke-linecap="round"/><path d="M350 8 L392 30 L350 52 Z" fill="#23395B"/></svg>
+    </div>
+    <div class="abs center" style="top:150px;font-size:26px;font-weight:800;color:var(--soft)" data-in="82.4" data-anim="fade">타당함을 증명</div>
+    <div class="abs center" style="top:370px;font-size:40px;font-weight:800" data-in="84" data-anim="up">근거를 들어 주장이 타당함을 증명하는 과정</div>
+    <div class="abs center" style="top:450px" data-in="86" data-anim="pop">
+      <span style="font-size:110px;font-weight:900;color:var(--orange);letter-spacing:6px">= 논증</span>
+    </div>
+  </div>
+
+  <!-- ===== S6 예고 (93-107) ===== -->
+  <div data-in="93" data-out="107">
+    <div class="abs center" style="top:30px" data-in="93.2" data-anim="pop"><span class="chip">근거로 결론을 세우는 두 가지 길</span></div>
+    <div class="abs card" style="left:80px;top:120px" data-in="94" data-anim="left">
+      <h3>길 1 · 규칙에서 출발하기</h3>
+      <svg width="460" height="150" viewBox="0 0 460 150">
+        <circle cx="130" cy="75" r="62" fill="#DBEAFE" stroke="#4D8FD6" stroke-width="5"/>
+        <text x="130" y="82" font-size="22" font-weight="900" text-anchor="middle" fill="#23395B" font-family="Noto Sans CJK KR, sans-serif">일반 규칙</text>
+        <line x1="205" y1="75" x2="300" y2="75" stroke="#23395B" stroke-width="6"/><path d="M296 62 L320 75 L296 88Z" fill="#23395B"/>
+        <circle cx="370" cy="75" r="26" fill="#4D8FD6"/>
+        <text x="370" y="128" font-size="20" font-weight="800" text-anchor="middle" fill="#23395B" font-family="Noto Sans CJK KR, sans-serif">구체적 결론</text>
+      </svg>
+      <p>"모든 ○○은 △△이다.<br>이것은 ○○이다.<br>그러므로 이것도 △△이다."</p>
+    </div>
+    <div class="abs card" style="left:680px;top:120px" data-in="95" data-anim="right">
+      <h3>길 2 · 사례를 모으기</h3>
+      <svg width="460" height="150" viewBox="0 0 460 150">
+        <circle cx="50" cy="30" r="16" fill="#2A9D8F"/><circle cx="40" cy="78" r="16" fill="#2A9D8F"/><circle cx="60" cy="124" r="16" fill="#2A9D8F"/><circle cx="110" cy="54" r="16" fill="#2A9D8F"/><circle cx="110" cy="104" r="16" fill="#2A9D8F"/>
+        <line x1="150" y1="75" x2="260" y2="75" stroke="#23395B" stroke-width="6"/><path d="M256 62 L280 75 L256 88Z" fill="#23395B"/>
+        <circle cx="360" cy="75" r="62" fill="#CCFBF1" stroke="#2A9D8F" stroke-width="5"/>
+        <text x="360" y="82" font-size="22" font-weight="900" text-anchor="middle" fill="#23395B" font-family="Noto Sans CJK KR, sans-serif">일반 결론</text>
+      </svg>
+      <p>"이것도 그렇고, 저것도 그렇고,<br>또 이것도 그렇다.<br>그러므로 대체로 그렇다."</p>
+    </div>
+    <div class="abs caption" data-in="98" data-anim="up">이 두 길의 <b>이름</b>은? 이번 단원에서 <b>논증 탐정</b>이 되어 파헤쳐 보자!</div>
+  </div>
+
+  <!-- ===== S7 마무리 (107-114) ===== -->
+  <div data-in="107" data-out="999">
+    <div class="abs center" style="top:180px" data-in="107.2" data-anim="pop"><span class="chip" style="background:var(--teal)">생각해 보기</span></div>
+    <div class="abs center" style="top:270px;font-size:52px;font-weight:900;line-height:1.4" data-in="107.8" data-anim="up">오늘 내가 들은 말 중<br><span style="color:var(--red)">근거 없는 주장</span>은 무엇이었을까?</div>
+    <div class="abs center sub" style="top:500px" data-in="109.5" data-anim="fade">광고, 친구의 말, 인터넷 댓글… 하나만 떠올려 적어 보자</div>
+  </div>
+
+</div>
+<div id="bar"><div id="fill"></div></div>
+<div id="controls">
+  <button id="play">▶ 재생</button>
+  <button data-jump="0">1 제목</button>
+  <button data-jump="7">2 광고</button>
+  <button data-jump="24">3 설득 대결</button>
+  <button data-jump="58">4 분석</button>
+  <button data-jump="80">5 논증이란</button>
+  <button data-jump="93">6 두 가지 길</button>
+  <button data-jump="107">7 생각해 보기</button>
+  <span id="time">0:00 / 1:54</span>
+</div>
+</div>
+
+<script>
+const DURATION = 114;
+const PAUSE_POINTS = [57.6]; // 설득 대결 질문에서 자동 정지(웹 재생 시)
+
+// ---------- 사람 그림 ----------
+const SKIN="#FBD6BC", SKIN_SH="#EDB898", LINE="#3A2A2A";
+function darker(hex,k=0.78){const n=parseInt(hex.slice(1),16);const r=Math.round((n>>16)*k),g=Math.round(((n>>8)&255)*k),b=Math.round((n&255)*k);return `rgb(${r},${g},${b})`;}
+
+function eyes(girl){
+  const one=(x)=>`
+    <ellipse cx="${x}" cy="104" rx="11.5" ry="13.5" fill="#fff"/>
+    <circle cx="${x}" cy="106" r="9.5" fill="#5A3A28"/>
+    <circle cx="${x}" cy="107" r="5" fill="#1E1414"/>
+    <circle cx="${x-3.5}" cy="101.5" r="3.4" fill="#fff"/>
+    <circle cx="${x+3.5}" cy="110" r="1.6" fill="#fff"/>
+    <path d="M${x-12} 99 Q${x} 88 ${x+12} 99" stroke="${LINE}" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    ${girl?`<path d="M${x+(x<115?-11:11)} 98 l${x<115?-6:6} -4" stroke="${LINE}" stroke-width="2.6" stroke-linecap="round"/>`:""}`;
+  const closed=(x)=>`<path d="M${x-11} 105 Q${x} 113 ${x+11} 105" stroke="${LINE}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`;
+  return `<g class="eo">${one(91)}${one(139)}</g><g class="ec" style="display:none">${closed(91)}${closed(139)}</g>`;
+}
+function brows(kind,col){
+  const c=darker(col,0.9);
+  if(kind==="doubt") return `<path d="M79 82 Q91 80 102 84" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M128 78 Q140 72 151 76" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  if(kind==="up") return `<path d="M79 80 Q91 72 102 78" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M128 78 Q139 72 151 80" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  if(kind==="plead") return `<path d="M79 84 Q90 82 102 77" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M128 77 Q140 82 151 84" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  return `<path d="M80 84 Q91 78 102 82" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M128 82 Q139 78 150 84" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+}
+function mouth(kind){
+  if(kind==="talk") return `<path d="M103 127 Q115 145 127 127 Q115 131 103 127Z" fill="#8A2E2E"/><path d="M108 135 Q115 141 122 135 Q115 133 108 135Z" fill="#F08A8A"/>`;
+  if(kind==="flat") return `<path d="M107 132 Q115 130 123 133" stroke="${LINE}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`;
+  if(kind==="hmm") return `<path d="M106 133 Q112 129 118 132 Q122 134 125 131" stroke="${LINE}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`;
+  if(kind==="o") return `<ellipse cx="115" cy="132" rx="6" ry="7.5" fill="#8A2E2E"/>`;
+  if(kind==="grin") return `<path d="M101 126 Q115 146 129 126Z" fill="#8A2E2E"/><path d="M103 127 L127 127 L125 131 L105 131Z" fill="#fff"/>`;
+  return `<path d="M104 128 Q115 139 126 128" stroke="${LINE}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`;
+}
+function arms(pose,col){
+  const out=darker(col,0.8);
+  const P={
+    down:{l:"M68 196 Q56 228 57 260",lh:[57,266],r:"M162 196 Q174 228 173 260",rh:[173,266]},
+    raise:{l:"M68 196 Q56 228 57 260",lh:[57,266],r:"M162 196 Q190 182 196 146",rh:[197,140]},
+    hip:{l:"M68 196 Q36 222 72 246",lh:[76,246],r:"M162 196 Q194 222 158 246",rh:[154,246]},
+    plead:{l:"M68 196 Q72 232 104 222",lh:[110,220],r:"M162 196 Q158 232 126 222",rh:[120,220]},
+    chin:{l:"M68 196 Q56 228 57 260",lh:[57,266],r:"M162 196 Q170 212 140 168",rh:[136,160]}
+  }[pose||"down"];
+  const s=(d)=>`<path d="${d}" stroke="${out}" stroke-width="27" fill="none" stroke-linecap="round"/><path d="${d}" stroke="${col}" stroke-width="21" fill="none" stroke-linecap="round"/>`;
+  const h=([x,y])=>`<circle cx="${x}" cy="${y}" r="11.5" fill="${SKIN}" stroke="${SKIN_SH}" stroke-width="2"/>`;
+  return {back:"", front:s(P.l)+s(P.r)+h(P.lh)+h(P.rh)};
+}
+function hair(style,col){
+  const hl=`rgba(255,255,255,.22)`;
+  if(style==="boy") return {back:``,
+    front:`<path d="M54 102 Q46 36 116 30 Q186 34 177 102 Q172 76 160 66 Q154 82 136 72 Q126 88 110 72 Q96 86 82 70 Q66 80 54 102Z" fill="${col}"/>
+           <path d="M92 44 Q112 34 136 40" stroke="${hl}" stroke-width="6" fill="none" stroke-linecap="round"/>`};
+  if(style==="boy2") return {back:``,
+    front:`<path d="M54 104 Q46 38 114 30 Q184 32 177 104 Q170 70 146 62 Q128 78 98 70 Q72 74 54 104Z" fill="${col}"/>
+           <path d="M116 32 Q122 14 136 22 Q126 24 124 34Z" fill="${col}"/>
+           <path d="M84 48 Q104 38 128 42" stroke="${hl}" stroke-width="6" fill="none" stroke-linecap="round"/>`};
+  if(style==="pony") return {
+    back:`<path d="M160 58 Q214 66 204 146 Q198 186 176 200 Q190 148 168 104Z" fill="${col}"/>
+          <path d="M54 100 Q48 150 64 168 L74 116Z" fill="${col}"/><path d="M176 100 Q182 150 166 168 L156 116Z" fill="${col}"/>`,
+    front:`<path d="M53 108 Q44 34 116 30 Q188 34 178 108 Q170 72 142 62 Q132 82 114 66 Q100 86 78 72 Q62 84 53 108Z" fill="${col}"/>
+           <circle cx="163" cy="60" r="8" fill="#E63946"/>
+           <path d="M88 46 Q110 36 134 42" stroke="${hl}" stroke-width="6" fill="none" stroke-linecap="round"/>`};
+  if(style==="mom") return {
+    back:`<path d="M50 100 Q42 166 74 172 L156 172 Q188 166 180 100Z" fill="${col}"/>
+          <circle cx="116" cy="30" r="24" fill="${col}"/>`,
+    front:`<path d="M53 108 Q46 36 118 32 Q184 36 178 108 Q172 78 154 66 Q122 92 72 78 Q60 90 53 108Z" fill="${col}"/>
+           <path d="M96 42 Q118 34 142 42" stroke="${hl}" stroke-width="6" fill="none" stroke-linecap="round"/>`};
+  return {back:"",front:""};
+}
+function outfit(kind,c){
+  if(kind==="boyUniform") return {
+    legs:`<rect x="84" y="268" width="27" height="44" rx="8" fill="#4B5563"/><rect x="119" y="268" width="27" height="44" rx="8" fill="#4B5563"/>
+          <ellipse cx="96" cy="315" rx="18" ry="8" fill="#222"/><ellipse cx="134" cy="315" rx="18" ry="8" fill="#222"/>`,
+    body:`<path d="M62 204 Q64 176 94 170 L136 170 Q166 176 168 204 L170 278 L60 278Z" fill="${c}" stroke="${darker(c,0.8)}" stroke-width="3"/>
+          <path d="M98 170 L115 210 L132 170Z" fill="#fff"/>
+          <path d="M111 182 L119 182 L122 214 L115 224 L108 214Z" fill="#C0392B"/>
+          <path d="M98 170 L108 200 L94 196Z M132 170 L122 200 L136 196Z" fill="${darker(c,0.85)}"/>
+          <rect x="138" y="222" width="18" height="4" rx="2" fill="${darker(c,0.7)}"/>`};
+  if(kind==="girlUniform") return {
+    legs:`<rect x="90" y="282" width="18" height="30" rx="6" fill="${SKIN}"/><rect x="122" y="282" width="18" height="30" rx="6" fill="${SKIN}"/>
+          <rect x="90" y="296" width="18" height="14" fill="#fff"/><rect x="122" y="296" width="18" height="14" fill="#fff"/>
+          <ellipse cx="99" cy="315" rx="16" ry="7.5" fill="#3B2A1E"/><ellipse cx="131" cy="315" rx="16" ry="7.5" fill="#3B2A1E"/>`,
+    body:`<path d="M70 250 L160 250 L174 292 L56 292Z" fill="#34405A"/>
+          <path d="M84 252 L76 290 M102 252 L98 290 M128 252 L132 290 M146 252 L154 290" stroke="#25304A" stroke-width="3"/>
+          <path d="M64 204 Q66 176 94 170 L136 170 Q164 176 166 204 L166 258 L64 258Z" fill="${c}" stroke="${darker(c,0.8)}" stroke-width="3"/>
+          <path d="M98 170 L115 204 L132 170Z" fill="#fff"/>
+          <path d="M115 194 L98 184 L98 204Z M115 194 L132 184 L132 204Z" fill="#E63946"/><circle cx="115" cy="194" r="5" fill="#C0303B"/>`};
+  if(kind==="mom") return {
+    legs:`<ellipse cx="98" cy="315" rx="16" ry="7.5" fill="#5B3A29"/><ellipse cx="132" cy="315" rx="16" ry="7.5" fill="#5B3A29"/>`,
+    body:`<path d="M66 250 L164 250 L172 312 L58 312Z" fill="#7C5C46"/>
+          <path d="M62 204 Q64 176 94 170 L136 170 Q166 176 168 204 L168 262 L62 262Z" fill="#FFF3DD"/>
+          <path d="M62 204 Q64 176 94 170 L104 170 L110 262 L62 262Z M168 204 Q166 176 136 170 L126 170 L120 262 L168 262Z" fill="${c}" stroke="${darker(c,0.8)}" stroke-width="3"/>
+          <circle cx="106" cy="214" r="3" fill="${darker(c,0.7)}"/><circle cx="106" cy="236" r="3" fill="${darker(c,0.7)}"/>`};
+  if(kind==="hoodie") return {
+    legs:`<rect x="84" y="268" width="27" height="44" rx="8" fill="#3D5A80"/><rect x="119" y="268" width="27" height="44" rx="8" fill="#3D5A80"/>
+          <ellipse cx="96" cy="315" rx="18" ry="8" fill="#fff" stroke="#CBD5E1" stroke-width="3"/><ellipse cx="134" cy="315" rx="18" ry="8" fill="#fff" stroke="#CBD5E1" stroke-width="3"/>`,
+    body:`<path d="M60 206 Q62 174 94 168 L136 168 Q168 174 170 206 L172 280 L58 280Z" fill="${c}" stroke="${darker(c,0.8)}" stroke-width="3"/>
+          <path d="M86 168 Q115 196 144 168" fill="none" stroke="${darker(c,0.75)}" stroke-width="5"/>
+          <path d="M104 182 L102 212 M126 182 L128 212" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+          <path d="M86 240 L144 240 L150 268 L80 268Z" fill="${darker(c,0.9)}"/>`};
+  return {legs:"",body:""};
+}
+function person(cfg, st){
+  const girl = cfg.hair==="pony"||cfg.hair==="mom";
+  const hr=hair(cfg.hair,cfg.hairCol), of=outfit(cfg.outfit,cfg.col), ar=arms(st.pose,cfg.armCol||cfg.col);
+  return `<svg width="230" height="330" viewBox="0 0 230 330" style="overflow:visible">
+    <ellipse cx="115" cy="320" rx="70" ry="8" fill="rgba(35,57,91,.14)"/>
+    ${hr.back}
+    ${of.legs}
+    ${of.body}
+    <rect x="104" y="142" width="22" height="32" rx="9" fill="${SKIN_SH}"/>
+    ${ar.front}
+    <circle cx="57" cy="104" r="11" fill="${SKIN}"/><circle cx="173" cy="104" r="11" fill="${SKIN}"/>
+    <ellipse cx="115" cy="100" rx="58" ry="56" fill="${SKIN}"/>
+    <ellipse cx="78" cy="122" rx="10" ry="6" fill="#F59E8B" opacity=".55"/><ellipse cx="152" cy="122" rx="10" ry="6" fill="#F59E8B" opacity=".55"/>
+    ${eyes(girl)}
+    ${brows(st.brow,cfg.hairCol)}
+    <path d="M113 116 Q116 120 119 116" stroke="${SKIN_SH}" stroke-width="3" fill="none" stroke-linecap="round"/>
+    ${mouth(st.mouth)}
+    ${hr.front}
+  </svg>`;
+}
+const PEOPLE = {
+  viewer:{hair:"boy2",hairCol:"#4A3426",outfit:"hoodie",col:"#F28C28",seed:0.7,
+    states:[[0,{mouth:"smile"}],[13.4,{mouth:"talk",pose:"chin",brow:"up"}],[16,{mouth:"hmm",pose:"chin",brow:"doubt"}]]},
+  minjun:{hair:"boy",hairCol:"#1F2430",outfit:"boyUniform",col:"#3B6FB6",seed:1.9,
+    states:[[0,{mouth:"smile"}],[29,{mouth:"talk",pose:"plead",brow:"plead"}],[35,{mouth:"smile",pose:"plead",brow:"plead"}],[40.4,{mouth:"smile"}]]},
+  seoyeon:{hair:"pony",hairCol:"#5A3524",outfit:"girlUniform",col:"#2A8C82",seed:3.1,
+    states:[[0,{mouth:"smile"}],[40.6,{mouth:"talk",pose:"raise",brow:"up"}],[46.4,{mouth:"grin",pose:"raise",brow:"up"}],[49,{mouth:"grin"}]]},
+  mom:{hair:"mom",hairCol:"#6B4430",outfit:"mom",col:"#E0A33A",seed:2.4,
+    states:[[0,{mouth:"flat",pose:"hip"}],[35,{mouth:"hmm",pose:"chin",brow:"doubt"}],[40.4,{mouth:"flat",pose:"hip"}],[48.4,{mouth:"o",pose:"hip",brow:"up"}],[49.6,{mouth:"smile",pose:"hip",brow:"up"}]]}
+};
+document.querySelectorAll("[data-person]").forEach(el=>{
+  const cfg=PEOPLE[el.dataset.person];
+  el.innerHTML = cfg.states.map(([,st],i)=>`<div class="pstate" style="position:absolute;inset:0;display:${i?"none":"block"}">${person(cfg,st)}</div>`).join("");
+});
+function renderPeople(t){
+  document.querySelectorAll("[data-person]").forEach(el=>{
+    const cfg=PEOPLE[el.dataset.person];
+    let idx=0; cfg.states.forEach(([ts],i)=>{ if(t>=ts) idx=i; });
+    const kids=el.children;
+    for(let i=0;i<kids.length;i++) kids[i].style.display = i===idx?"block":"none";
+    const cur=kids[idx];
+    const blink=((t+cfg.seed)%3.6)<0.14;
+    cur.querySelector(".eo").style.display=blink?"none":"";
+    cur.querySelector(".ec").style.display=blink?"":"none";
+    cur.style.transform=`translateY(${Math.sin(t*2.1+cfg.seed)*3}px)`;
+  });
+}
+
+// ---------- 애니메이션 엔진 ----------
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const easeOut=x=>1-Math.pow(1-x,3);
+const easeBack=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+const nodes=[...document.querySelectorAll("[data-in]")];
+
+function render(t){
+  renderPeople(t);
+  for(const el of nodes){
+    const tin=parseFloat(el.dataset.in), tout=el.dataset.out?parseFloat(el.dataset.out):Infinity;
+    // 장면 컨테이너(직계 자식)는 즉시 on/off
+    const isScene = el.parentElement.id==="stage";
+    if(isScene){ el.style.opacity = (t>=tin && t<tout)?1:0; el.style.display=(t>=tin-0.01&&t<tout)?"block":"none"; continue; }
+    const p = clamp((t-tin)/0.6);
+    const q = isFinite(tout)? clamp((tout-t)/0.35) : 1;
+    let op = Math.min(p,q), tf = "";
+    const anim = el.dataset.anim||"fade";
+    const e = easeOut(p);
+    if(anim==="up")   tf=`translateY(${(1-e)*40}px)`;
+    if(anim==="down") tf=`translateY(${-(1-e)*40}px)`;
+    if(anim==="left") tf=`translateX(${-(1-e)*80}px)`;
+    if(anim==="right")tf=`translateX(${(1-e)*80}px)`;
+    if(anim==="pop")  tf=`scale(${0.6+0.4*easeBack(p)})`;
+    if(anim==="grow"){ el.style.clipPath=`inset(0 ${(1-e)*100}% 0 0)`; }
+    if(el.dataset.wobble) tf+=` rotate(${Math.sin(t*2.2+tin)*8}deg)`;
+    if(el.dataset.fall){
+      const f=clamp((t-parseFloat(el.dataset.fall))/0.9), dir=parseFloat(el.dataset.fallDir||1);
+      if(f>0){ tf+=` translate(${dir*f*60}px, ${f*f*90}px) rotate(${dir*f*70}deg)`; op=Math.min(op,1-f*0.85); }
+    }
+    if(el.dataset.tilt){
+      const f=easeOut(clamp((t-parseFloat(el.dataset.tilt))/0.8));
+      tf+=` translate(${f*parseFloat(el.dataset.tiltX)}px, ${f*parseFloat(el.dataset.tiltY)}px) rotate(${f*parseFloat(el.dataset.tiltDeg)}deg)`;
+    }
+    if(el.dataset.glow){
+      const g=clamp((t-parseFloat(el.dataset.glow))/0.5);
+      el.style.filter = g>0 ? `drop-shadow(0 0 ${18*g*(0.75+0.25*Math.sin(t*4))}px rgba(42,157,143,.9))` : "";
+    }
+    el.style.opacity=op; el.style.transform=tf;
+  }
+  document.querySelectorAll("[data-type]").forEach(el=>{
+    const tin=parseFloat(el.dataset.in), s=el.dataset.text;
+    const n=Math.floor(clamp((t-tin)/(s.length*0.075))*s.length);
+    el.textContent=s.slice(0,n);
+  });
+}
+window.renderAt = render;
+
+// ---------- 화면 맞춤 ----------
+const stage=document.getElementById("stage");
+function fit(){
+  const render = document.body.classList.contains("render");
+  const w=window.innerWidth, h=window.innerHeight-(render?0:90);
+  const s=Math.min(w/1280,h/720);
+  stage.style.transform=`scale(${s})`;
+  stage.style.margin = `${(720*s-720)/2}px ${(1280*s-1280)/2}px`;
+}
+if(new URLSearchParams(location.search).has("render")) document.body.classList.add("render");
+window.addEventListener("resize",fit); fit();
+
+// ---------- 재생 컨트롤 ----------
+let t=0, playing=false, last=null, pausedAt=new Set();
+const fill=document.getElementById("fill"), timeEl=document.getElementById("time"), playBtn=document.getElementById("play");
+const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+function update(){ render(t); fill.style.width=(t/DURATION*100)+"%"; timeEl.textContent=`${fmt(t)} / ${fmt(DURATION)}`; playBtn.textContent=playing?"❚❚ 일시정지":"▶ 재생"; }
+function loop(ts){
+  if(!playing){last=null;return;}
+  if(last!=null){
+    const nt=t+(ts-last)/1000;
+    const stop=PAUSE_POINTS.find(p=>t<p&&nt>=p&&!pausedAt.has(p));
+    if(stop!==undefined){ t=stop; pausedAt.add(stop); playing=false; update(); return; }
+    t=Math.min(DURATION,nt);
+    if(t>=DURATION) playing=false;
+  }
+  last=ts; update(); requestAnimationFrame(loop);
+}
+playBtn.onclick=()=>{ if(t>=DURATION){t=0;pausedAt.clear();} playing=!playing; if(playing) requestAnimationFrame(loop); else update(); };
+document.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>{ t=parseFloat(b.dataset.jump); pausedAt=new Set(PAUSE_POINTS.filter(p=>p<=t)); update(); });
+document.getElementById("bar").onclick=e=>{ const r=e.currentTarget.getBoundingClientRect(); t=clamp((e.clientX-r.left)/r.width)*DURATION; pausedAt=new Set(PAUSE_POINTS.filter(p=>p<=t)); update(); };
+document.addEventListener("keydown",e=>{ if(e.code==="Space"){ e.preventDefault(); playBtn.click(); } });
+update();
+</script>
+</body>
+</html>
