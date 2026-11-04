@@ -76,11 +76,15 @@ const SEMESTERS = [
 const yearOf = (t) => t.year || 2026;
 const YEAR_TONES = ['bg-lilac', 'bg-mint', 'bg-peach', 'bg-butter'];
 
-export default function AssessmentGallery({ tasks, grades, onUnit }) {
-  // 학년도 탭: tasks 에 있는 year 를 모아 최신 학년도가 맨 앞(기본 선택)이에요.
-  const years = useMemo(() => [...new Set(tasks.map(yearOf))].sort((a, b) => b - a), [tasks]);
+export default function AssessmentGallery({ tasks, grades, years: yearConf, onUnit }) {
+  // 학년도 탭: content.json 의 years.list 와 tasks 에 있는 year 를 모아 최신 학년도부터 보여 줘요.
+  // 처음 열리는 탭은 years.current(올해 학년도)이고, 없으면 가장 최신 학년도예요.
+  const years = useMemo(
+    () => [...new Set([...(yearConf?.list || []), ...tasks.map(yearOf)])].sort((a, b) => b - a),
+    [tasks, yearConf]
+  );
   const yearItems = useMemo(() => years.map((y, i) => ({ value: y, label: `${y}학년도`, tone: YEAR_TONES[i % YEAR_TONES.length] })), [years]);
-  const [year, setYear] = useState(() => years[0] ?? 2026);
+  const [year, setYear] = useState(() => (years.includes(yearConf?.current) ? yearConf.current : years[0] ?? 2026));
   const [grade, setGrade] = useState(0);
   const [semester, setSemester] = useState(2);
 
