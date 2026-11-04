@@ -9,7 +9,7 @@ export default function Footer({ title, questions, live }) {
         <div className="flex flex-col gap-4">
           <h2 className="text-3xl">{title} 🔎</h2>
           <p className="max-w-md text-ink/80">
-            미래엔(신유식) 국어 교과서로 1~3학년이 함께 읽고, 묻고, 쓰는 공간이에요. 오늘의 질문에 내 생각을 짧게 적어 보세요.
+            미래엔(신유식) 국어 교과서로 1~3학년이 함께 읽고, 묻고, 쓰는 공간이에요. 오늘의 질문에 답하면 우리 반 생각 나무에 열매가 열려요.
           </p>
           <div className="flex flex-wrap gap-2">
             <a href="#grades" className="btn bg-pink px-3 py-1.5 text-sm">학년 고르기</a>

@@ -90,3 +90,33 @@ create policy "storage teacher update" on storage.objects
 drop policy if exists "storage teacher delete" on storage.objects;
 create policy "storage teacher delete" on storage.objects
   for delete to authenticated using (bucket_id = 'assessment-files');
+
+-- 6) 오늘의 질문 "생각 나무" 열매(학생 답) ---------------------------------
+-- 누구나 답을 달고 읽을 수 있어요. 고치기·지우기는 로그인한 선생님만 (#admin).
+create table if not exists public.question_answers (
+  id           uuid primary key default gen_random_uuid(),
+  question_key text not null check (question_key ~ '^\d{4}-\d{2}-\d{2}$'),  -- 날짜, 예: '2026-11-04'
+  question     text not null default '' check (char_length(question) <= 300),
+  nickname     text not null check (char_length(btrim(nickname)) between 1 and 12),
+  body         text not null check (char_length(btrim(body)) between 1 and 200),
+  created_at   timestamptz not null default now(),
+  check (nickname !~ '[<>]' and body !~ '[<>]')
+);
+create index if not exists question_answers_day_idx on public.question_answers (question_key, created_at);
+
+alter table public.question_answers enable row level security;
+
+drop policy if exists "public read answers" on public.question_answers;
+create policy "public read answers" on public.question_answers
+  for select using (true);
+
+drop policy if exists "public add answers" on public.question_answers;
+create policy "public add answers" on public.question_answers
+  for insert to anon, authenticated with check (true);
+
+drop policy if exists "teacher manage answers" on public.question_answers;
+create policy "teacher manage answers" on public.question_answers
+  for delete to authenticated using (true);
+
+grant select, insert on public.question_answers to anon, authenticated;
+grant delete on public.question_answers to authenticated;

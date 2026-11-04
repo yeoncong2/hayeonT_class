@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { BUCKET, fetchAssessments, supabase } from '../lib/supabase';
 import { FILE_TYPE } from './AssessmentGallery';
 import content from '../data/content.json';
+import AnswerAdmin from './AnswerAdmin';
 
 const COLORS = ['pink', 'peach', 'butter', 'mint', 'sky', 'lilac'];
 const firstTask = (g) => content.tasks.find((t) => t.grade === g)?.title || '';
@@ -205,6 +206,7 @@ export default function AdminPanel() {
               </li>
             ))}
           </ul>
+          <AnswerAdmin />
           <button onClick={() => supabase.auth.signOut()} className="mt-8 font-jua underline">로그아웃</button>
         </>
       )}
