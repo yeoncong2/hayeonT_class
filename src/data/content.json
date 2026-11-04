@@ -414,9 +414,17 @@
         "2": [
           {
             "no": 1,
-            "title": "",
-            "emoji": "📦",
-            "lessons": []
+            "title": "토론",
+            "emoji": "🗣️",
+            "lessons": [
+              {
+                "title": "설득의 힘을 기르는 토론",
+                "area": "듣기·말하기",
+                "textbook": "",
+                "worksheet": "",
+                "video": "videos/toron-motivation.html?v=1"
+              }
+            ]
           },
           {
             "no": 2,
