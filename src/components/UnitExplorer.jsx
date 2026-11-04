@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { BookOpen, FileText, ChevronRight, PackageOpen } from 'lucide-react';
+import { BookOpen, FileText, ChevronRight, PackageOpen, Clapperboard } from 'lucide-react';
 import { TONE, UNIT_TONES, AREA_TONE } from '../lib/colors';
 import SectionTitle from './SectionTitle';
 import Modal from './Modal';
@@ -38,7 +38,7 @@ function UnitModal({ unit, tone, grade, semester, onClose, notify }) {
       {unit && (
         <>
           <p className="mb-4 text-sm text-ink/80">
-            {grade}학년 {semester}학기 · 소단원을 골라 교과서 자료나 활동지를 열어 보세요.
+            {grade}학년 {semester}학기 · 소단원을 골라 교과서 자료, 활동지, 동기 유발 영상 자료를 열어 보세요.
           </p>
           <ol className="space-y-3">
             {unit.lessons.map((l, i) => {
@@ -59,6 +59,7 @@ function UnitModal({ unit, tone, grade, semester, onClose, notify }) {
                   <div className="mt-3 flex flex-wrap gap-2">
                     <LinkButton href={l.textbook} icon={BookOpen} label="교과서 자료" className="bg-sky" onMissing={() => notify('📘 교과서 자료를 준비하고 있어요!')} />
                     <LinkButton href={l.worksheet} icon={FileText} label="활동지" className="bg-butter" onMissing={() => notify('📝 활동지를 준비하고 있어요!')} />
+                    <LinkButton href={l.video} icon={Clapperboard} label="동기 유발 영상 자료" className="bg-pink" onMissing={() => notify('🎬 동기 유발 영상 자료를 준비하고 있어요!')} />
                   </div>
                 </motion.li>
               );
@@ -84,7 +85,7 @@ export default function UnitExplorer({ grades, grade, semester, onGrade, onSemes
           tag="단원 탐험"
           tone="bg-butter"
           title={`${g.emoji} ${g.label} 국어 · 1~4단원`}
-          desc="단원을 누르면 소단원별 교과서 자료와 활동지로 이동할 수 있어요."
+          desc="단원을 누르면 소단원별 교과서 자료, 활동지, 동기 유발 영상 자료로 이동할 수 있어요."
         >
           <div className="mt-2 flex flex-wrap items-center gap-3">
             <div className="flex rounded-full border-2 border-ink bg-white p-1 shadow-pop-sm" role="tablist" aria-label="학년">
@@ -165,7 +166,7 @@ export default function UnitExplorer({ grades, grade, semester, onGrade, onSemes
                     )}
                     {!empty && (
                       <span className="mt-4 inline-flex items-center gap-1 self-end font-jua text-sm text-ink/80 transition-transform group-hover:translate-x-1">
-                        자료 · 활동지 열기 <ChevronRight size={16} strokeWidth={3} />
+                        자료 · 활동지 · 영상 열기 <ChevronRight size={16} strokeWidth={3} />
                       </span>
                     )}
                   </div>

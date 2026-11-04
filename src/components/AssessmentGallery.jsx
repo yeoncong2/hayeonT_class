@@ -72,7 +72,15 @@ const SEMESTERS = [
   { value: 2, label: '2학기', tone: 'bg-sky' },
 ];
 
+// year 가 없는 예전 항목은 2026학년도로 봐요.
+const yearOf = (t) => t.year || 2026;
+const YEAR_TONES = ['bg-lilac', 'bg-mint', 'bg-peach', 'bg-butter'];
+
 export default function AssessmentGallery({ tasks, grades, onUnit }) {
+  // 학년도 탭: tasks 에 있는 year 를 모아 최신 학년도가 맨 앞(기본 선택)이에요.
+  const years = useMemo(() => [...new Set(tasks.map(yearOf))].sort((a, b) => b - a), [tasks]);
+  const yearItems = useMemo(() => years.map((y, i) => ({ value: y, label: `${y}학년도`, tone: YEAR_TONES[i % YEAR_TONES.length] })), [years]);
+  const [year, setYear] = useState(() => years[0] ?? 2026);
   const [grade, setGrade] = useState(0);
   const [semester, setSemester] = useState(2);
 
@@ -82,7 +90,10 @@ export default function AssessmentGallery({ tasks, grades, onUnit }) {
   );
   // semester 가 없는 예전 항목은 2학기로 봐요.
   const semOf = (t) => t.semester || 2;
-  const list = useMemo(() => tasks.filter((t) => semOf(t) === semester && (!grade || t.grade === grade)), [tasks, grade, semester]);
+  const list = useMemo(
+    () => tasks.filter((t) => yearOf(t) === year && semOf(t) === semester && (!grade || t.grade === grade)),
+    [tasks, year, grade, semester]
+  );
 
   return (
     <section id="assessment" className="scroll-mt-16 px-4 py-14 sm:py-20">
@@ -92,9 +103,10 @@ export default function AssessmentGallery({ tasks, grades, onUnit }) {
           tag="수행평가 전시관"
           tone="bg-mint"
           title="학년별 수행평가 🖼️"
-          desc="학기와 학년을 골라 수행평가를 살펴봐요. 관련 단원을 누르면 그 단원 자료로 바로 갈 수 있고, 결과물 칸을 누르면 결과물을 올리고 친구들 작품도 볼 수 있는 곳이 열려요."
+          desc="학년도와 학기, 학년을 골라 수행평가를 살펴봐요. 관련 단원을 누르면 그 단원 자료로 바로 갈 수 있고, 결과물 칸을 누르면 결과물을 올리고 친구들 작품도 볼 수 있는 곳이 열려요."
         >
           <div className="mt-2 flex flex-wrap gap-3">
+            <Filter items={yearItems} value={year} onChange={setYear} label="학년도" id="galleryYearPill" />
             <Filter items={SEMESTERS} value={semester} onChange={setSemester} label="학기" id="gallerySemesterPill" />
             <Filter items={gradeItems} value={grade} onChange={setGrade} label="학년" id="galleryGradePill" />
           </div>
@@ -102,13 +114,13 @@ export default function AssessmentGallery({ tasks, grades, onUnit }) {
 
         {list.length === 0 && (
           <motion.div
-            key={`empty-${semester}-${grade}`}
+            key={`empty-${year}-${semester}-${grade}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="card mx-auto flex max-w-md flex-col items-center gap-2 px-6 py-10 text-center"
           >
             <span className="text-5xl" aria-hidden>🌱</span>
-            <p className="font-jua text-xl">{semester}학기 수행평가는 곧 채워져요</p>
+            <p className="font-jua text-xl">{year}학년도 {semester}학기 수행평가는 곧 채워져요</p>
             <p className="text-sm text-ink/70">조금만 기다려 주세요!</p>
           </motion.div>
         )}
@@ -118,7 +130,7 @@ export default function AssessmentGallery({ tasks, grades, onUnit }) {
             {list.map((t, i) => {
               const tone = TONE[t.color] || TONE.sky;
               const g = grades.find((x) => x.grade === t.grade);
-              const order = tasks.filter((x) => x.grade === t.grade && semOf(x) === semOf(t)).indexOf(t) + 1;
+              const order = tasks.filter((x) => yearOf(x) === yearOf(t) && x.grade === t.grade && semOf(x) === semOf(t)).indexOf(t) + 1;
               return (
                 <motion.article
                   layout
