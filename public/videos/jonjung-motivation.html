@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>상대를 존중하며 말하기 — 존중하며 말하기 동기유발 영상</title>
+<style>
+  :root { --bg:#FFF6E8; --ink:#3B3355; --pink:#FF5C8A; --green:#2FAE7F; --blue:#4F86E8; --card:#fff; }
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html, body { background:var(--bg); color:var(--ink);
+    font-family:"Jua","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif; }
+  body { min-height:100vh; min-height:100dvh; display:flex; flex-direction:column; align-items:center;
+    padding:max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)); gap:14px; }
+  h1 { font-size:clamp(22px, 3.2vw, 34px); font-weight:800; text-align:center; }
+  h1 small { display:block; font-size:.55em; color:#7A6E95; font-weight:700; margin-top:4px; }
+  .player { position:relative; width:100%; max-width:min(1200px, calc((100dvh - 230px) * 16 / 9)); min-width:min(100%, 480px);
+    aspect-ratio:16/9; background:#000; border-radius:18px; overflow:hidden; box-shadow:0 8px 0 #E8D9C2, 0 12px 30px rgba(59,51,85,.18); }
+  video { width:100%; height:100%; display:block; background:#000; }
+  #start { position:absolute; inset:0; border:0; background:rgba(30,20,60,.25); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  #start span { background:var(--pink); color:#fff; font:inherit; font-size:clamp(22px, 3vw, 34px); font-weight:800;
+    padding:18px 40px; border-radius:999px; box-shadow:0 6px 0 #C23A66; }
+  #start.hide { display:none; }
+  .bar { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:1200px; }
+  .bar button { font:inherit; font-size:17px; font-weight:700; border:3px solid var(--ink); background:var(--card); color:var(--ink);
+    border-radius:999px; padding:9px 16px; min-height:44px; cursor:pointer; }
+  .bar button.on { background:#FFE98A; }
+  .bar button.main { background:var(--blue); color:#fff; border-color:#2F5FB8; }
+  .tip { font-size:15px; color:#7A6E95; text-align:center; }
+  details { width:100%; max-width:900px; background:var(--card); border:3px solid var(--ink); border-radius:18px; overflow:hidden; }
+  summary { font-size:18px; font-weight:800; padding:12px 18px; cursor:pointer; list-style:none; }
+  summary::-webkit-details-marker { display:none; }
+  summary::before { content:"▸ "; } details[open] summary::before { content:"▾ "; }
+  ol { list-style:none; border-top:2px dashed #E8D9C2; }
+  ol button { all:unset; box-sizing:border-box; display:flex; gap:12px; width:100%; padding:10px 18px; cursor:pointer;
+    font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif; font-size:16px; line-height:1.5; word-break:keep-all; }
+  ol time { flex:none; width:42px; color:#7A6E95; font-variant-numeric:tabular-nums; }
+  ol li.on button { background:#DDF3E9; }
+  ol li.on time { color:var(--green); font-weight:700; }
+</style>
+</head>
+<body>
+  <h1>상대를 존중하며 말하기<small>중학교 1학년 국어 · 2. 우리가 만드는 세상 ⑵ 존중하며 말하기 · 동기유발 영상</small></h1>
+
+  <div class="player">
+    <video id="v" src="jonjung-motivation.mp4" poster="jonjung-motivation-poster.jpg"
+           controls playsinline webkit-playsinline preload="metadata"></video>
+    <button id="start" aria-label="영상 재생"><span>▶ 영상 보기</span></button>
+  </div>
+
+  <div class="bar" id="chapters"></div>
+  <div class="bar">
+    <button class="main" id="fs">⛶ 전체 화면</button>
+    <button id="back">↺ 10초 뒤로</button>
+  </div>
+  <p class="tip">영상이 끝나면 언어생활 점검표로 나의 말 습관을 돌아보고, 나만의 언어생활 규칙을 만들어 보세요.</p>
+
+  <details>
+    <summary>내레이션 대본 (누르면 그 부분부터 재생)</summary>
+    <ol id="script"></ol>
+  </details>
+
+<script>
+  const v = document.getElementById('v');
+  const start = document.getElementById('start');
+  // 장면 시작 시각(초)
+  const CH = [["처음부터", 0], ["① 언어 폭력이란?", 15.44], ["② 언어 폭력의 문제점", 27.39], ["③ 나의 말 습관 점검", 49.75], ["④ 존중하며 말하기", 72.04], ["⑤ 언어생활 규칙", 83.83]];
+  const LINES = [
+    [2.6, '우리는 매일 수많은 말을 주고받습니다.'],
+    [6.23, '그 말은 누군가를 기쁘게 하기도, 아프게 하기도 합니다.'],
+    [10.53, '말은 어떤 힘을 가지고 있을까요?'],
+    [16.24, '언어 폭력이란 욕설이나 협박, 차별하거나 혐오하는 표현처럼'],
+    [21.88, '폭력적인 말로 다른 사람에게 모욕감이나 상처를 주는 행위입니다.'],
+    [28.09, '언어 폭력은 신체적 폭력처럼 마음에 심각한 상처를 남깁니다.'],
+    [33.65, '한번 금이 간 마음은 쉽게 회복되지 않습니다.'],
+    [39.15, '언어 폭력은 문자 메시지나 SNS에서도 시간과 장소를 가리지 않고 일어나고,'],
+    [46.02, '또 다른 폭력으로 이어지기도 합니다.'],
+    [50.55, '그렇다면 나의 말 습관은 어떨까요?'],
+    [54.0, '화가 날 때, 장난칠 때, 혹은 습관처럼 욕을 하지는 않나요?'],
+    [59.32, '다른 사람을 차별하거나 혐오하는 말, 무시하는 말을 한 적은 없나요?'],
+    [64.47, '점검표로 나의 말 습관을 솔직하게 돌아봅시다.'],
+    [74.44, '내 입장만 생각하지 않고 상대의 입장과 상황을 헤아려 말하면,'],
+    [79.7, '우리는 서로 원만하게 소통할 수 있습니다.'],
+    [84.53, '오늘은 내 말을 돌아보고, 나만의 언어생활 규칙을 만들어 봅시다.']
+  ];
+  const go = t => { v.currentTime = t; const p = v.play(); if (p) p.catch(() => {}); start.classList.add('hide'); };
+  const fmt = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+
+  const box = document.getElementById('chapters');
+  CH.forEach(([label, t]) => {
+    const b = document.createElement('button');
+    b.textContent = label; b.onclick = () => go(t); box.appendChild(b);
+  });
+  const sc = document.getElementById('script');
+  LINES.forEach(([t, text]) => {
+    const li = document.createElement('li'); const b = document.createElement('button');
+    b.innerHTML = `<time>${fmt(t)}</time><span>${text}</span>`; b.onclick = () => go(t);
+    li.appendChild(b); sc.appendChild(li);
+  });
+
+  start.onclick = () => { const p = v.play(); if (p) p.catch(() => {}); start.classList.add('hide'); };
+  v.addEventListener('play', () => start.classList.add('hide'));
+  const sync = () => {
+    const t = v.currentTime;
+    let cur = 0; CH.forEach(([, s], i) => { if (t >= s - 0.05) cur = i; });
+    [...box.children].forEach((b, i) => b.classList.toggle('on', i === cur));
+    let ln = -1; LINES.forEach(([s], i) => { if (t >= s - 0.1) ln = i; });
+    [...sc.children].forEach((li, i) => li.classList.toggle('on', i === ln));
+  };
+  v.addEventListener('timeupdate', sync); v.addEventListener('seeked', sync);
+  document.getElementById('back').onclick = () => { v.currentTime = Math.max(0, v.currentTime - 10); };
+  document.getElementById('fs').onclick = () => {
+    const p = document.querySelector('.player');
+    if (p.requestFullscreen) p.requestFullscreen().catch(() => v.webkitEnterFullscreen && v.webkitEnterFullscreen());
+    else if (p.webkitRequestFullscreen) p.webkitRequestFullscreen();
+    else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+  };
+</script>
+</body>
+</html>
