@@ -3,6 +3,7 @@ import Header from './components/Header';
 import GradePicker from './components/GradePicker';
 import UnitExplorer from './components/UnitExplorer';
 import AssessmentGallery from './components/AssessmentGallery';
+import LottoRules from './components/LottoRules';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
 import AdminPanel from './components/AdminPanel';
@@ -77,6 +78,7 @@ function Site() {
           notify={notify}
         />
         <AssessmentGallery tasks={content.tasks} years={content.years} grades={content.grades} onUnit={showUnit} />
+        <LottoRules lotto={content.lotto} />
       </main>
       <Footer title={content.site.title} questions={content.questions} live={live} />
       <Toast message={toast} />

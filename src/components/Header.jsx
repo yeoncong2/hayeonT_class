@@ -6,6 +6,7 @@ const NAV = [
   { href: '#grades', label: '학년 고르기', short: '학년', color: 'bg-pink' },
   { href: '#units', label: '단원 탐험', short: '단원', color: 'bg-butter' },
   { href: '#assessment', label: '수행평가', short: '수행', color: 'bg-mint' },
+  { href: '#lotto', label: '내 성적 맞춰봐', short: '성적', color: 'bg-lilac' },
 ];
 
 function BgmToggle() {
@@ -13,7 +14,7 @@ function BgmToggle() {
   return (
     <button onClick={toggle} data-bgm-toggle role="switch" aria-checked={playing} aria-label="레트로 BGM 켜기/끄기" title={playing ? 'BGM 끄기' : 'BGM 켜기'} className="btn bg-white px-2.5 py-1.5">
       {playing ? <Music size={16} strokeWidth={2.5} /> : <VolumeX size={16} strokeWidth={2.5} />}
-      <span className="font-jua text-xs">BGM</span>
+      <span className="hidden font-jua text-xs sm:inline">BGM</span>
       <span className={`relative h-5 w-9 rounded-full border-2 border-ink transition-colors ${playing ? 'bg-mint-deep' : 'bg-gray-200'}`}>
         <motion.span
           className="absolute top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 border-ink bg-butter"
