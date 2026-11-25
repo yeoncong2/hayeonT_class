@@ -46,7 +46,7 @@
   <h1>상대를 존중하며 말하기<small>중학교 1학년 국어 · 2. 우리가 만드는 세상 ⑵ 존중하며 말하기 · 동기유발 영상</small></h1>
 
   <div class="player">
-    <video id="v" src="jonjung-motivation.mp4?v=3" poster="jonjung-motivation-poster.jpg"
+    <video id="v" src="jonjung-motivation.mp4?v=5" poster="jonjung-motivation-poster.jpg"
            controls playsinline webkit-playsinline preload="metadata"></video>
     <button id="start" aria-label="영상 재생"><span>▶ 영상 보기</span></button>
   </div>
@@ -55,9 +55,9 @@
   <div class="bar">
     <button class="main" id="fs">⛶ 전체 화면</button>
     <button id="back">↺ 10초 뒤로</button>
-    <a class="dl" id="dl" href="jonjung-motivation.mp4?v=3" download="상대를 존중하며 말하기_동기유발영상.mp4">⬇ 영상 내려받기 <small>MP4 · 6.5MB</small></a>
+    <a class="dl" id="dl" href="jonjung-motivation.mp4?v=5" download="상대를 존중하며 말하기_동기유발영상.mp4">⬇ 영상 내려받기 <small>MP4 · 6.5MB</small></a>
   </div>
-  <p class="tip">🔊 소리가 안 나면 기기 음량, 무음 모드, 블루투스 연결을 확인해 주세요.<br>영상이 끝나면 언어생활 점검표로 나의 말 습관을 돌아보고, 나만의 언어생활 규칙을 만들어 보세요.</p>
+  <p class="tip">🔊 소리가 작거나 안 나면 기기 음량 버튼과 블루투스 연결을 확인해 주세요.<br>영상이 끝나면 언어생활 점검표로 나의 말 습관을 돌아보고, 나만의 언어생활 규칙을 만들어 보세요.</p>
 
   <details>
     <summary>내레이션 대본 (누르면 그 부분부터 재생)</summary>
@@ -87,7 +87,7 @@
     [80.7, '우리는 서로 원만하게 소통할 수 있습니다.'],
     [85.52, '오늘은 내 말을 돌아보고, 나만의 언어생활 규칙을 만들어 봅시다.']
   ];
-  const go = t => { v.muted = false; v.currentTime = t; const p = v.play(); if (p) p.catch(() => {}); start.classList.add('hide'); };
+  const go = t => { unmute(); v.currentTime = t; const p = v.play(); if (p) p.catch(() => {}); start.classList.add('hide'); };
   const fmt = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
 
   const box = document.getElementById('chapters');
@@ -102,7 +102,10 @@
     li.appendChild(b); sc.appendChild(li);
   });
 
-  const unmute = () => { v.muted = false; v.defaultMuted = false; try { v.volume = 1; } catch (e) {} };
+  // iPad·iPhone Safari: 무음 모드에서도 영상 소리가 나도록 오디오 세션을 '재생'으로 설정
+  const audioOn = () => { try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {} };
+  audioOn();
+  const unmute = () => { audioOn(); v.muted = false; v.defaultMuted = false; try { v.volume = 1; } catch (e) {} };
   start.onclick = () => { unmute(); const p = v.play(); if (p) p.catch(() => {}); start.classList.add('hide'); };
   v.addEventListener('play', () => { start.classList.add('hide'); if (v.muted) unmute(); });
   const sync = () => {
